@@ -3,7 +3,7 @@ package org.example.focus;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class FocusController {
     @FXML
     private Label welcomeText;
 
