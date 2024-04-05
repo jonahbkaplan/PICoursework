@@ -1,0 +1,24 @@
+/* https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#textinputcontrol */
+.root{
+    color: #000;
+    -background-color: #1b1b1b;
+    -fx-background-color: #1b1b1b;
+    -fx-font-size: 11pt;
+}                
+.label{
+    -fx-text-fill: #e8e8e8;
+
+}
+.button{
+    -fx-background-color: #d3d3d3;
+}
+.textfield{
+    color: #000;
+    -fx-highlight-fill: #838383;
+    -fx-text-fill: #838383;
+    -background-color:  #838383;
+    -fx-background-color: #838383;
+    -fx-highlight-text-fill: #838383;
+    -fx-prompt-text-fill: #838383;
+}
+
