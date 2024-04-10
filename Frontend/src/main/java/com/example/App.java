@@ -1,7 +1,10 @@
 package com.example;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,7 +18,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Font;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 /**
@@ -90,17 +94,34 @@ public class App extends Application {
 
         BorderPane border = new BorderPane();
         HBox top = new HBox();
+        top.setSpacing(1);
         top.setPadding(new Insets(10));
-        // top.setStyle("-fx-background-color:black;");
-
-        // top.setBorder(new Border(new BorderStroke(null, BorderStrokeStyle.SOLID,
-        // null, null)));
 
         border.setTop(top);
 
-        Label focus = new Label("focus");
-        focus.setFont(Font.font("Lucida Calligraphy", 40));
-        top.getChildren().addAll(focus);
+        Label focus = new Label("  focus");
+        focus.getStyleClass().add("title-font");
+
+        Button menubutton = new Button();
+        menubutton.getStyleClass().add("menu-button");
+
+        Label time = new Label();
+        time.getStyleClass().add("time-display");
+
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                time.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm\ndd/MM")));
+            }
+        };
+        timer.start();
+
+        top.getChildren().addAll(menubutton, focus, time);
+
+        Line line = new Line(0, 50, 2000, 50);
+        line.setStroke(Color.WHITE);
+        line.setStrokeWidth(1);
+        border.getChildren().add(line);
 
         GridPane grid2 = new GridPane();
         grid2.setHgap(20);
@@ -108,9 +129,6 @@ public class App extends Application {
         grid2.setPadding(new Insets(0, 10, 0, 10));
 
         border.setCenter(grid2);
-
-        Label subtitle2 = new Label("Welcome");
-        grid2.add(subtitle2, 0, 0);
 
         scene2 = new Scene(border, 1200, 700);
         scene2.getStylesheets().add("style1.css");
@@ -124,8 +142,6 @@ public class App extends Application {
     }
 
     public static boolean checkdetails(String username, String password) {
-        String correctUsername = "Developer";
-        String correctPassword = "12345678";
-        return (correctPassword.equals(password) && correctUsername.equals(username));
+        return true;
     }
 }

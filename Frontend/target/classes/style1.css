@@ -21,4 +21,30 @@
     -fx-highlight-text-fill: #838383;
     -fx-prompt-text-fill: #838383;
 }
+.menu-button {
+    -fx-background-color: transparent; 
+    -fx-background-image: url('menuicon2.png');
+    -fx-background-position: center;
+    -fx-pref-width: 32;
+    -fx-pref-height: 32;
+    -fx-background-size: auto;
+}
 
+.title-font{
+    -fx-text-fill: #e8e8e8;
+    -fx-font-family: "Lucida Calligraphy";
+    -fx-font-size: 20pt;
+    -fx-translate-x: 6;
+    -fx-translate-y: -9;
+    /* -fx-translate-z: 0; */
+}
+
+.time-display{
+
+    -fx-text-fill: #e8e8e8;
+    -fx-font-family: "Lucida Bright";
+    -fx-font-size: 10pt;
+    -fx-translate-x: 1350;
+    -fx-translate-y: -3;
+    -fx-text-alignment: center;
+}
