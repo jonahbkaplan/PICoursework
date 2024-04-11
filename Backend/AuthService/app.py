@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+import datetime
 from flask_cors import CORS
 import bcrypt
 import uuid
@@ -19,10 +20,20 @@ class User:
 users = []
 tokens = {}
 
-
 app = Flask(__name__, )
 CORS(app, resources={r"/*": {"origins": ["http://localhost:3000", "http://127.0.0.1:3000"]}})
 
+@app.route('/refresh_token', methods=["POST", "OPTIONS"])
+def refresh_token():
+    if request.method == "OPTIONS":
+        return {"Access-Control-Allow-Origin": "*"}
+    token = request.headers.get("auth-token")
+    if token not in tokens:
+        return {"success": False, "message": "Invalid token"}
+    user_id = tokens[token][0]
+    expiry = datetime.datetime.now() + datetime.timedelta(hours=1)
+    tokens[token] = (user_id, expiry)
+    return {"success": True}
 
 @app.route('/login', methods=["POST", "OPTIONS"])
 def login():
@@ -47,7 +58,7 @@ def login():
 
         if pass_hash == user.pass_hash:
             # Create token and send a successful login response
-            token = uuid.uuid4()
+            token = str(uuid.uuid4())
             tokens[token] = user.user_id
             return {"success": True, "authtoken": token}
 
@@ -55,9 +66,17 @@ def login():
     except KeyError:
         return {"success": False, "message": "Missing required fields (useremail, password)"}
 
+@app.route('/logout', methods=["POST", "OPTIONS"])
+def logout():
+    if request.method == "OPTIONS":
+        return {"Access-Control-Allow-Origin": "*"}
+    token = request.headers.get("auth-token")
+    if token in tokens:
+        del tokens[token]
+    return {"success": True}
 
 @app.route('/signup', methods=["POST"])
-def register():
+def signup():
     try:
         if request.method == "OPTIONS":
             return {"Access-Control-Allow-Origin": "*"}
@@ -78,7 +97,7 @@ def register():
 
         # Create a new user
 
-        new_user = User(uuid.uuid4(), data["user"], pass_hash, salt, data["email"], data["google_email"])
+        new_user = User(str(uuid.uuid4()), data["user"], pass_hash, salt, data["email"], data["google_email"])
 
         print(new_user)
 
@@ -86,13 +105,39 @@ def register():
 
         # Create token
 
-        token = uuid.uuid4()
+        token = str(uuid.uuid4())
+        expiry = datetime.datetime.now() + datetime.timedelta(hours=1)
 
-        tokens[token] = new_user.user_id
+        tokens[token] = (new_user.user_id, expiry)
 
         return {"success": True, "authtoken": token}
     except KeyError:
         return {"success": False, "message": "Missing required fields (user, email, password)"}
+
+def get_user_from_token():
+    token = request.headers.get("auth-token")
+    if token not in tokens:
+        return None
+    if datetime.datetime.now() > tokens[token][1]:
+        del tokens[token]
+        return None
+    user_id = tokens[token][0]
+    for u in users:
+        if u.user_id == user_id:
+            return u
+    return None
+
+@app.route('/user', methods=["GET","OPTIONS"])
+def get_user():
+    if request.method == "OPTIONS":
+        return {"Access-Control-Allow-Origin": "*"}
+
+    user = get_user_from_token()
+
+    if not user:
+        return {"success": False, "message": "Invalid token"}
+
+    return {"success": True, "user": user.username, "email": user.email, "google_email": user.google_email}
 
 
 if __name__ == '__main__':
