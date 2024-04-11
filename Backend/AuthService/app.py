@@ -3,19 +3,22 @@ import datetime
 from flask_cors import CORS
 import bcrypt
 import uuid
+import string
+from email.utils import parseaddr
 
+alphanum = string.ascii_letters + string.digits
+allowedSpecial = "!@#$%^&*_+?"
 
 # Temporary User Class
 class User:
-    def __init__(self, user_id, username, pass_hash, salt, email, google_email):
+    def __init__(self, user_id, username, pass_hash, salt, email):
         self.user_id = user_id
         self.username = username
         self.pass_hash = pass_hash
         self.salt = salt
         self.email = email
-        self.google_email = google_email
     def __repr__(self):
-        return f"User({self.user_id}, {self.username}, {self.pass_hash}, {self.salt}, {self.email}, {self.google_email}), "
+        return f"User({self.user_id}, {self.username}, {self.pass_hash}, {self.salt}, {self.email})"
 
 users = []
 tokens = {}
@@ -75,14 +78,27 @@ def logout():
         del tokens[token]
     return {"success": True}
 
-@app.route('/signup', methods=["POST"])
+@app.route('/signup', methods=["POST","OPTIONS"])
 def signup():
     try:
         if request.method == "OPTIONS":
             return {"Access-Control-Allow-Origin": "*"}
         data = request.get_json()
-        if "google_email" not in data:
-            data["google_email"] = None
+
+        if data["user"] == "" or data["email"] == "" or data["password"] == "":
+            raise KeyError()
+
+        if any(char not in alphanum+"_" for char in data["user"]):
+            return {"success": False, "message": "Username must only contain alphanumeric characters and _"}
+
+        if parseaddr(data["email"])[1] != data["email"]:
+            return {"success": False, "message": "Invalid email format"}
+
+        if len(data["password"]) < 8:
+            return {"success": False, "message": "Password must be at least 8 characters long"}
+
+        if any(char not in alphanum + "!@#$%^&*_+?"for char in data["password"]) or not any(char in allowedSpecial for char in data["password"]):
+            return {"success": False, "message": f"Password must have alphanumeric characters and at least one special character: {allowedSpecial}"}
 
         # Check if the username is already taken
         if data["user"] in (user.username for user in users):
@@ -97,9 +113,7 @@ def signup():
 
         # Create a new user
 
-        new_user = User(str(uuid.uuid4()), data["user"], pass_hash, salt, data["email"], data["google_email"])
-
-        print(new_user)
+        new_user = User(str(uuid.uuid4()), data["user"], pass_hash, salt, data["email"])
 
         users.append(new_user)
 
@@ -137,8 +151,18 @@ def get_user():
     if not user:
         return {"success": False, "message": "Invalid token"}
 
-    return {"success": True, "user": user.username, "email": user.email, "google_email": user.google_email}
+    return {"success": True, "user": user.username, "email": user.email}
 
+@app.route('/metrics', methods=["PUT"])
+def get_current_metrics():
+    try:
+        user = get_user_from_token()
+        if not user:
+            return {"success": False, "message": "Invalid token"}
+        data = request.get_json()
+
+    except KeyError:
+        return {"success": False, "message": "Missing required fields (google_email)"}
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
