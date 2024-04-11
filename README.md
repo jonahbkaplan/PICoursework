@@ -15,12 +15,33 @@
 
 #### Server Process and Endpoint for Feeding Extracted Data
 
+See the readme in Backend/AuthService for more info on getting access to user data
+
 ### Stress / Sensory Overload Prediction Model
 
 
 ## Frontend
 
 ### Mood & Emotional Reactivity Tracking Boards & Tools.
+=======
+### Data Model
+
+![PIDataModel drawio](https://github.com/jonahbkaplan/PICoursework/assets/106742444/df2b308a-1562-4443-bbca-f6536d1ffe02)
+
+The existing data model can be extended when we add new features. This is a semi-structured *schema* which must be enforced by all of the services we write (see below). 
+
+### Servicing Architecture (interfacing between backend & UI) 
+
+![PIServicingArchitecture drawio](https://github.com/jonahbkaplan/PICoursework/assets/106742444/0e1843b0-dba7-472e-a91d-efe79e34c344)
+
+The above uses a **microservices** architecture, every UI component talks to an individual service which handles obtaining its relevant information, as well as writing to the database. This works by sending JSON requests from the UI component to the service through a POST request, and waiting for a JSON response on a GET request. JavaHTTP libraries can be integrated with JavaFX to enable this functionality. 
+
+
+### Stress / Sensory Overload Prediction Model
+
+## Frontend
+
+### Mood & Emotional Reactivity Tracking Boards & Tools
 
 ### Productivity Tracking Tools
 
