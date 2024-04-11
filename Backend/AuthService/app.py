@@ -26,31 +26,34 @@ CORS(app, resources={r"/*": {"origins": ["http://localhost:3000", "http://127.0.
 
 @app.route('/login', methods=["POST", "OPTIONS"])
 def login():
-    if request.method == "OPTIONS":
-        return {"Access-Control-Allow-Origin": "*"}
-    data = request.get_json()
+    try:
+        if request.method == "OPTIONS":
+            return {"Access-Control-Allow-Origin": "*"}
+        data = request.get_json()
 
-    user = None
-    for u in users:
-        if u.username == data["useremail"] or u.email == data["useremail"]:
-            user = u
-            break
+        user = None
+        for u in users:
+            if u.username == data["useremail"] or u.email == data["useremail"]:
+                user = u
+                break
 
-    # Check if the user exists
-    if not user:
+        # Check if the user exists
+        if not user:
+            return {"success": False, "message": "Username/Email or password is incorrect"}
+
+        pass_hash = bcrypt.hashpw(data["password"].encode(), user.salt.encode()).decode("ascii")
+
+        # Check if the password is correct
+
+        if pass_hash == user.pass_hash:
+            # Create token and send a successful login response
+            token = uuid.uuid4()
+            tokens[token] = user.user_id
+            return {"success": True, "authtoken": token}
+
         return {"success": False, "message": "Username/Email or password is incorrect"}
-
-    pass_hash = bcrypt.hashpw(data["password"].encode(), user.salt.encode()).decode("ascii")
-
-    # Check if the password is correct
-
-    if pass_hash == user.pass_hash:
-        # Create token and send a successful login response
-        token = uuid.uuid4()
-        tokens[token] = user.user_id
-        return {"success": True, "authtoken": token}
-
-    return {"success": False, "message": "Username/Email or password is incorrect"}
+    except KeyError:
+        return {"success": False, "message": "Missing required fields (useremail, password)"}
 
 
 @app.route('/signup', methods=["POST"])

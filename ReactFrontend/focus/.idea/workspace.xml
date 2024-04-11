@@ -5,60 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b359c0b5-43dd-4489-b9b8-1c9f7dcfd5d7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../../.idea/PICoursework.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Backend/AuthService/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Backend/AuthService/app.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/android/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/android/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/android/.idea/migrations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/android/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/public/favicon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/public/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/public/logo192.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/public/logo512.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/public/manifest.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/public/robots.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/src/App.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/src/App.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/src/App.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/src/index.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/src/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/src/logo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/src/reportWebVitals.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Capacitor/focus/src/setupTests.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Electron/focus.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../focus.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/favicon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/manifest.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/robots.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/App.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Login.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Signup.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/logo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/reportWebVitals.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/setupTests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +32,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "dev",
+    "git-widget-placeholder": "2a02d34b",
     "last_opened_file_path": "C:/Users/AlexD/Downloads/intellij-haskell.zip",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -120,7 +67,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1712766777834</updated>
-      <workItem from="1712766778907" duration="12372000" />
+      <workItem from="1712766778907" duration="13772000" />
     </task>
     <servers />
   </component>
