@@ -30,6 +30,8 @@ public class App extends Application {
     Scene scene;
     Scene scene2;
 
+    Boolean sidePanelOpen = false;
+
     Button button;
 
     @Override
@@ -92,10 +94,13 @@ public class App extends Application {
 
         // Layout 2
 
+        // Defines the top bar
+
         BorderPane border = new BorderPane();
         HBox top = new HBox();
         top.setSpacing(1);
         top.setPadding(new Insets(10));
+        top.getStyleClass().add("top-pane");
 
         border.setTop(top);
 
@@ -123,15 +128,69 @@ public class App extends Application {
         line.setStrokeWidth(1);
         border.getChildren().add(line);
 
-        GridPane grid2 = new GridPane();
-        grid2.setHgap(20);
-        grid2.setVgap(20);
-        grid2.setPadding(new Insets(0, 10, 0, 10));
+        // Menu panel
 
-        border.setCenter(grid2);
+        GridPane blank = new GridPane();
+        GridPane menugrid = new GridPane();
+
+        menugrid.getStyleClass()
+                .add("menu-grid");
+        menubutton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (!sidePanelOpen) {
+                    border.setLeft(menugrid);
+                } else {
+                    border.setLeft(blank);
+                }
+                sidePanelOpen = !sidePanelOpen;
+            }
+        });
+
+        Button settingsbutton = new Button();
+        settingsbutton.getStyleClass().add("settings-button");
+        menugrid.add(settingsbutton, 0, 8);
+
+        Button homebutton = new Button();
+        homebutton.getStyleClass().add("home-button");
+        menugrid.add(homebutton, 0, 1);
+
+        // Home page
+
+        GridPane home = new GridPane();
+        home.setHgap(20);
+        home.setVgap(20);
+        home.setPadding(new Insets(0, 10, 0, 10));
+
+        Label welcome = new Label("Welcome");
+        home.add(welcome, 0, 0);
+        border.setCenter(home);
+
+        homebutton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                border.setCenter(home);
+            }
+        });
+
+        // Settings
+
+        GridPane settings = new GridPane();
+        settings.setHgap(20);
+        settings.setVgap(20);
+        settings.setPadding(new Insets(0, 10, 0, 10));
+
+        settings.add(new Label("Settings"), 0, 0);
 
         scene2 = new Scene(border, 1200, 700);
         scene2.getStylesheets().add("style1.css");
+
+        settingsbutton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                border.setCenter(settings);
+            }
+        });
 
         stage.show();
 
@@ -141,7 +200,7 @@ public class App extends Application {
         launch(args);
     }
 
-    public static boolean checkdetails(String username, String password) {
+    public static boolean checkdetails(String username, String password) { // Use this for authention
         return true;
     }
 }
