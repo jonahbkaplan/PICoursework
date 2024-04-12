@@ -142,8 +142,8 @@ This endpoint will always respond successfully.
 
 ## GET /user
 
-This endpoint will return the user's username and email. 
-This may not be particularly useful in the frontend but is a good way to test if your **authtoken** is working correctly.
+This endpoint will return the user's username, email and user_id. 
+This endpoint is useful for verifying the user's **authtoken**.
 
 **Requires an **authtoken** to be provided in the request header.**
 
