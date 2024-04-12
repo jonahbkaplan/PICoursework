@@ -155,3 +155,17 @@ This may not be particularly useful in the frontend but is a good way to test if
   "email": "johndoe@mail.com"
 }
 ```
+
+## POST /delete_user
+
+If you need to delete a user (which is probably quite unlikely for now). 
+
+**Requires an **authtoken** to be provided in the request header.**
+
+### Response
+
+```json
+{
+  "success": true
+}
+```

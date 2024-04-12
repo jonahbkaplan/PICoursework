@@ -5,38 +5,73 @@ import bcrypt
 import uuid
 import string
 from email.utils import parseaddr
+import pymongo
+import certifi
+import traceback
+
+ca = certifi.where()
+mongo_client = pymongo.MongoClient()
+# "mongodb+srv://ThomasMycer:pi-coursework-37@picluster.6cnum4w.mongodb.net/?retryWrites=true&w=majority&appName=PICluster&tls=true")
+
+users = mongo_client.user_db.users
+
+salt = bcrypt.gensalt()
+users.insert_one({"user_id": "1",
+                  "user": "admin",
+                  "pass_hash": bcrypt.hashpw("admin".encode(), salt).decode("ascii"),
+                  "salt": salt.decode("ascii"),
+                  "email": "admin@gmail.com"})
 
 alphanum = string.ascii_letters + string.digits
-allowedSpecial = "!@#$%^&*_+?"
+allowed_special = "!@#$%^&*_+?"
 
-# Temporary User Class
-class User:
-    def __init__(self, user_id, username, pass_hash, salt, email):
-        self.user_id = user_id
-        self.username = username
-        self.pass_hash = pass_hash
-        self.salt = salt
-        self.email = email
-    def __repr__(self):
-        return f"User({self.user_id}, {self.username}, {self.pass_hash}, {self.salt}, {self.email})"
-
-users = []
 tokens = {}
 
 app = Flask(__name__, )
 CORS(app, resources={r"/*": {"origins": ["http://localhost:3000", "http://127.0.0.1:3000"]}})
 
+
+def create_token(user_id):
+    # Create a new token that will expire in 1 hour
+    token = str(uuid.uuid4())
+    expiry = datetime.datetime.now() + datetime.timedelta(hours=1)
+    tokens[token] = (user_id, expiry)
+    return token
+
+
+def get_user_from_token():
+    token = request.headers.get("auth-token")
+
+    # Check if the token is valid
+    if token not in tokens:
+        return None, None
+
+    # Check if the token has expired
+    if datetime.datetime.now() > tokens[token][1]:
+        del tokens[token]
+        return None, None
+
+    # Get the user_id associated with the token
+    user_id = tokens[token][0]
+    return users.find_one({"user_id": user_id}), token
+
+
 @app.route('/refresh_token', methods=["POST", "OPTIONS"])
 def refresh_token():
     if request.method == "OPTIONS":
         return {"Access-Control-Allow-Origin": "*"}
-    token = request.headers.get("auth-token")
-    if token not in tokens:
-        return {"success": False, "message": "Invalid token"}
-    user_id = tokens[token][0]
+
+    # Try and get the user_id associated with the token
+    user_id, token = get_user_from_token()
+
+    # Check if the token was valid
+    if not token:
+        return {"success": False, "message": "Invalid token"}, 401
+
     expiry = datetime.datetime.now() + datetime.timedelta(hours=1)
     tokens[token] = (user_id, expiry)
     return {"success": True}
+
 
 @app.route('/login', methods=["POST", "OPTIONS"])
 def login():
@@ -45,40 +80,48 @@ def login():
             return {"Access-Control-Allow-Origin": "*"}
         data = request.get_json()
 
-        user = None
-        for u in users:
-            if u.username == data["useremail"] or u.email == data["useremail"]:
-                user = u
-                break
+        if data["useremail"] == "" or data["password"] == "":
+            raise KeyError()
 
         # Check if the user exists
+        user = users.find_one({"user": data["useremail"]}) or users.find_one({"email": data["useremail"]})
+
         if not user:
             return {"success": False, "message": "Username/Email or password is incorrect"}
 
-        pass_hash = bcrypt.hashpw(data["password"].encode(), user.salt.encode()).decode("ascii")
+        pass_hash = bcrypt.hashpw(data["password"].encode(), user["salt"].encode()).decode("ascii")
 
         # Check if the password is correct
 
-        if pass_hash == user.pass_hash:
+        if pass_hash == user["pass_hash"]:
             # Create token and send a successful login response
-            token = str(uuid.uuid4())
-            tokens[token] = user.user_id
+            token = create_token(user["user_id"])
+
             return {"success": True, "authtoken": token}
 
         return {"success": False, "message": "Username/Email or password is incorrect"}
     except KeyError:
-        return {"success": False, "message": "Missing required fields (useremail, password)"}
+        return {"success": False, "message": "Missing required fields (useremail, password)"}, 400
+    except Exception as e:
+        print(traceback.format_exc())
+        return {"success": False, "message": str(e)}, 500
+
 
 @app.route('/logout', methods=["POST", "OPTIONS"])
 def logout():
     if request.method == "OPTIONS":
         return {"Access-Control-Allow-Origin": "*"}
-    token = request.headers.get("auth-token")
+
+    # Get the user associated with the token
+    user, token = get_user_from_token()
+
+    # Log out the user from this session by deleting the token
     if token in tokens:
         del tokens[token]
     return {"success": True}
 
-@app.route('/signup', methods=["POST","OPTIONS"])
+
+@app.route('/signup', methods=["POST", "OPTIONS"])
 def signup():
     try:
         if request.method == "OPTIONS":
@@ -88,7 +131,7 @@ def signup():
         if data["user"] == "" or data["email"] == "" or data["password"] == "":
             raise KeyError()
 
-        if any(char not in alphanum+"_" for char in data["user"]):
+        if any(char not in alphanum + "_" for char in data["user"]):
             return {"success": False, "message": "Username must only contain alphanumeric characters and _"}
 
         if parseaddr(data["email"])[1] != data["email"]:
@@ -96,14 +139,15 @@ def signup():
 
         if len(data["password"]) < 8:
             return {"success": False, "message": "Password must be at least 8 characters long"}
-
-        if any(char not in alphanum + "!@#$%^&*_+?"for char in data["password"]) or not any(char in allowedSpecial for char in data["password"]):
-            return {"success": False, "message": f"Password must have alphanumeric characters and at least one special character: {allowedSpecial}"}
+        if any(char not in alphanum + "!@#$%^&*_+?" for char in data["password"]) or not any(
+                char in allowed_special for char in data["password"]):
+            return {"success": False,
+                         "message": f"Password must have alphanumeric characters and at least one special character: {allowed_special}"}
 
         # Check if the username is already taken
-        if data["user"] in (user.username for user in users):
+        if users.find_one({"user": data["user"]}):
             return {"success": False, "message": "Username already taken"}
-        if data["email"] in (user.email for user in users):
+        if users.find_one({"email": data["email"]}):
             return {"success": False, "message": "Email already taken"}
 
         # Hash the password
@@ -113,56 +157,76 @@ def signup():
 
         # Create a new user
 
-        new_user = User(str(uuid.uuid4()), data["user"], pass_hash, salt, data["email"])
+        new_user = {"user_id": str(uuid.uuid4()),
+                    "user": data["user"],
+                    "pass_hash": pass_hash,
+                    "salt": salt,
+                    "email": data["email"]}
 
-        users.append(new_user)
+        users.insert_one(new_user)
 
-        # Create token
-
-        token = str(uuid.uuid4())
-        expiry = datetime.datetime.now() + datetime.timedelta(hours=1)
-
-        tokens[token] = (new_user.user_id, expiry)
+        token = create_token(new_user["user_id"])
 
         return {"success": True, "authtoken": token}
     except KeyError:
-        return {"success": False, "message": "Missing required fields (user, email, password)"}
+        print(traceback.format_exc())
+        return {"success": False, "message": "Missing required fields (user, email, password)"}, 400
+    except Exception as e:
+        print(traceback.format_exc())
+        return {"success": False, "message": str(e)}, 500
 
-def get_user_from_token():
-    token = request.headers.get("auth-token")
-    if token not in tokens:
-        return None
-    if datetime.datetime.now() > tokens[token][1]:
-        del tokens[token]
-        return None
-    user_id = tokens[token][0]
-    for u in users:
-        if u.user_id == user_id:
-            return u
-    return None
 
-@app.route('/user', methods=["GET","OPTIONS"])
+@app.route('/user', methods=["GET", "OPTIONS"])
 def get_user():
     if request.method == "OPTIONS":
         return {"Access-Control-Allow-Origin": "*"}
 
-    user = get_user_from_token()
+    user, token = get_user_from_token()
 
-    if not user:
-        return {"success": False, "message": "Invalid token"}
+    # Check if the token was valid
+    if not token:
+        return {"success": False, "message": "Invalid token"}, 401
 
-    return {"success": True, "user": user.username, "email": user.email}
+    return {"success": True, "user": user["user"], "email": user["email"]}
 
-@app.route('/metrics', methods=["PUT"])
-def get_current_metrics():
+
+@app.route('/delete_user', methods=["POST", "OPTIONS"])
+def delete_user():
+    if request.method == "OPTIONS":
+        return {"Access-Control-Allow-Origin": "*"}
+
+    user, token = get_user_from_token()
+
+    # Check if the token was valid
+    if not token:
+        return {"success": False, "message": "Invalid token"}, 401
+
+    # Delete the user
+    users.find_one_and_delete({"user_id": user["user_id"]})
+    token = request.headers.get("auth-token")
+
+    # Log out the user from this session by deleting the token
+    del tokens[token]
+    return {"success": True}
+
+
+@app.route('/metrics', methods=["PUT", "OPTIONS"])
+def request_from_db():
+    if request.method == "OPTIONS":
+        return {"Access-Control-Allow-Origin": "*"}
+
     try:
-        user = get_user_from_token()
-        if not user:
-            return {"success": False, "message": "Invalid token"}
-        data = request.get_json()
+        user, token = get_user_from_token()
+
+        # Check if the token was valid
+        if not token:
+            return {"success": False, "message": "Invalid token"}, 401
+
+        return {"success": True, "message": "Here is some dummy data", "Stress": 0.5, "Productivity": 0.8}
 
     except KeyError:
-        return {"success": False, "message": "Missing required fields (google_email)"}
+        return {"success": False, "message": "Missing required fields (google_email)"}, 400
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

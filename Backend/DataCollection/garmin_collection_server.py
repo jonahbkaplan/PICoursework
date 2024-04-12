@@ -36,8 +36,6 @@ async def process_FIT_file(path):
     except Exception as e:
         print(f"Streamed FIT file reading failed due to: {e}")
 
-
-
 # API server setup
 app = FastAPI()
 
