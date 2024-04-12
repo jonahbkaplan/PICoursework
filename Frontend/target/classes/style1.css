@@ -1,0 +1,80 @@
+/* https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#textinputcontrol */
+.root{
+    color: #000;
+    -background-color: #1b1b1b;
+    -fx-background-color: #1b1b1b;
+    -fx-font-size: 11pt;
+}                
+.label{
+    -fx-text-fill: #e8e8e8;
+
+}
+.button{
+    -fx-background-color: #d3d3d3;
+}
+.textfield{
+    color: #000;
+    -fx-highlight-fill: #838383;
+    -fx-text-fill: #838383;
+    -background-color:  #838383;
+    -fx-background-color: #838383;
+    -fx-highlight-text-fill: #838383;
+    -fx-prompt-text-fill: #838383;
+}
+.menu-button {
+    -fx-background-color: transparent; 
+    -fx-background-image: url('menuicon2.png');
+    -fx-background-position: center;
+    -fx-pref-width: 32;
+    -fx-pref-height: 32;
+    -fx-background-size: auto;
+}
+
+.title-font{
+    -fx-text-fill: #e8e8e8;
+    -fx-font-family: "Lucida Calligraphy";
+    -fx-font-size: 20pt;
+    -fx-translate-x: 6;
+    -fx-translate-y: -9;
+    /* -fx-translate-z: 0; */
+}
+
+.time-display{
+    -fx-text-fill: #e8e8e8;
+    -fx-font-family: "Lucida Bright";
+    -fx-font-size: 10pt;
+    -fx-translate-x: 1350;
+    -fx-translate-y: -3;
+    -fx-text-alignment: center;
+}
+
+.menu-grid{
+    -fx-background-color: #1d1d1d;
+    -fx-padding: 15;
+    -fx-spacing: 10;
+    -fx-border-width: 1px;
+    -fx-border-color: #e8e8e8;
+    -fx-pref-height: 500;
+    -fx-translate-y:-13.5;
+}
+
+.top-pane{
+}
+
+.settings-button {
+    -fx-background-color: transparent; 
+    -fx-background-image: url('settings.png');
+    -fx-background-position: center;
+    -fx-pref-width: 32;
+    -fx-pref-height: 32;
+    -fx-background-size: auto;
+    -fx-translate-y: 20;
+}
+.home-button {
+    -fx-background-color: transparent;
+    -fx-background-image: url('home2.png');
+    -fx-background-position: center;
+    -fx-pref-width: 30;
+    -fx-pref-height: 30;
+    -fx-background-size: auto;
+}
