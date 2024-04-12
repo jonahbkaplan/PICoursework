@@ -10,7 +10,7 @@ This is to ensure tokens that are not being used are removed.
 A token will also expire if the user logs out.
 Therefore, while a token is in use, they should be refreshed regularly.
 
-See **POST /refresh_token** below for more information on how to refresh the **authtoken**.
+See */refresh_token* below for more information on how to refresh the **authtoken**.
 
 Below, please find the different endpoints that can be accessed and the expected request and response formats for usage in the frontend.
 
@@ -52,7 +52,7 @@ To use the **AuthService** in the frontend, the following steps are required:
 - A password is less than 8 characters long or does not include a special character
 - If a field is missing/blank
 
-E.g. A message will be returned indicating what was wrong with the request
+**E.g. A message will be returned indicating what was wrong with the request**
 ```json
 {
 "success": false,
@@ -69,9 +69,8 @@ E.g. A message will be returned indicating what was wrong with the request
   "password": "123456"
 }
 ```
-A username may also be specified in the "useremail" field. These have been combined for convienience.
-
-**A request to login will accept either a username or email to be entered as well as the correct password.**
+**A request to login will accept either a username or email.**
+These have been combined into a single field for ease of use.
 ### Response
 ```json
 {
@@ -93,8 +92,10 @@ A username may also be specified in the "useremail" field. These have been combi
 # Restricted Endpoints
 
 These endpoints require a valid **authtoken** to be provided in the **request header** to access them. 
-**authtokens** can be obtained from /login and /signup
-E.g.
+
+**authtokens** can be obtained from */login* and */signup*
+
+**E.g.**
 
 ```json
 {

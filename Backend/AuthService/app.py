@@ -134,6 +134,9 @@ def signup():
         if any(char not in alphanum + "_" for char in data["user"]):
             return {"success": False, "message": "Username must only contain alphanumeric characters and _"}
 
+        if len(data["user"]) < 3 or len(data["user"]) > 20:
+            return {"success": False, "message": "Username must be between 3 and 20 characters long"}
+
         if parseaddr(data["email"])[1] != data["email"]:
             return {"success": False, "message": "Invalid email format"}
 
