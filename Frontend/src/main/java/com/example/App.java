@@ -69,7 +69,6 @@ public class App extends Application {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
                 String givenUsername = nameEntry.getText().toString();
                 String givenPassword = passEntry.getText().toString();
 
@@ -149,21 +148,23 @@ public class App extends Application {
 
         Button settingsbutton = new Button();
         settingsbutton.getStyleClass().add("settings-button");
-        menugrid.add(settingsbutton, 0, 8);
+        menugrid.add(settingsbutton, 0, 2);
 
         Button homebutton = new Button();
         homebutton.getStyleClass().add("home-button");
         menugrid.add(homebutton, 0, 1);
 
+        Line parting = new Line(0, 200, 30, 200);
+        menugrid.add(parting, 0, 3);
+        parting.setStroke(Color.WHITE);
+        parting.setStrokeWidth(1);
+        parting.getStyleClass().add("parting-line");
+
         // Home page
 
-        GridPane home = new GridPane();
-        home.setHgap(20);
-        home.setVgap(20);
-        home.setPadding(new Insets(0, 10, 0, 10));
+        HomePane home = new HomePane();
+        home.formatPane(4.0, 3.5);
 
-        Label welcome = new Label("Welcome");
-        home.add(welcome, 0, 0);
         border.setCenter(home);
 
         homebutton.setOnAction(new EventHandler<ActionEvent>() {
@@ -175,12 +176,8 @@ public class App extends Application {
 
         // Settings
 
-        GridPane settings = new GridPane();
-        settings.setHgap(20);
-        settings.setVgap(20);
-        settings.setPadding(new Insets(0, 10, 0, 10));
-
-        settings.add(new Label("Settings"), 0, 0);
+        SettingsPane settings = new SettingsPane();
+        settings.formatPane();
 
         scene2 = new Scene(border, 1200, 700);
         scene2.getStylesheets().add("style1.css");

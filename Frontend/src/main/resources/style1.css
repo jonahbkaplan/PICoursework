@@ -78,3 +78,27 @@
     -fx-pref-height: 30;
     -fx-background-size: auto;
 }
+.parting-line{
+    -fx-translate-y: 30;
+}
+.progress-arc{
+    -fx-text-fill: #e8e8e8;
+    -fx-font-family: "Impact";
+    -fx-translate-x: 60;
+    -fx-translate-y: 45;
+    -fx-text-alignment: center;
+}
+.progress-percent{
+    -fx-text-fill: #e8e8e8;
+    -fx-font-size: 40pt;
+    -fx-text-alignment: center;
+}
+.progress-small{
+    -fx-font-size: 12pt;
+    -fx-text-alignment: center;
+
+}
+.work-label{
+    -fx-translate-x: 50;
+    -fx-translate-y: 15;
+}
