@@ -1,4 +1,4 @@
-package org.example.focus;
+package com.example;
 
 import java.awt.*;
 import java.awt.TrayIcon.MessageType;
