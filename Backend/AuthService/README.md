@@ -92,7 +92,9 @@ A username may also be specified in the "useremail" field. These have been combi
 
 # Restricted Endpoints
 
-These endpoints require a valid **authtoken** to be provided in the **request header** in order to access them. E.g.
+These endpoints require a valid **authtoken** to be provided in the **request header** to access them. 
+**authtokens** can be obtained from /login and /signup
+E.g.
 
 ```json
 {
