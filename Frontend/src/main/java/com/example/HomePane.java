@@ -21,10 +21,9 @@ public class HomePane extends GridPane {
 
         this.add(new Label("Welcome"), 0, 0);
 
-
         Label workLabel = new Label("Work progress:");
         workLabel.getStyleClass().add("work-label");
-        this.add(workLabel, 1, 0 );
+        this.add(workLabel, 1, 0);
 
         Arc progressArc = new Arc();
 
@@ -48,13 +47,13 @@ public class HomePane extends GridPane {
         stats.getStyleClass().add("progress-arc");
 
         Label progText = new Label(
-                Math.round(100 * workDone / workTarget) + "%");
+                Math.round(100 * Math.min(workDone / workTarget, 1)) + "%");
         progText.getStyleClass().add("progress-percent");
-        
-        Label completed = new Label(Math.round(10*workDone)*0.1 + "/" + Math.round(10*workTarget)*0.1 + " hours");
+
+        Label completed = new Label(
+                Math.round(10 * workDone) * 0.1 + "/" + Math.round(10 * workTarget) * 0.1 + " hours");
         completed.getStyleClass().add("progress-small");
 
-        
         stats.getChildren().addAll(progText, completed);
 
         this.add(progress, 1, 1);
