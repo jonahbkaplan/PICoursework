@@ -1,9 +1,10 @@
-module org.example.focus {
+
+module com.example {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
 
-
-    opens org.example.focus to javafx.fxml;
-    exports org.example.focus;
+    opens com.example to javafx.fxml;
+    exports com.example;
 }
+
