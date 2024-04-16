@@ -18,7 +18,7 @@ public class DBConnection {
     Datastore datastore;
 
     public DBConnection(){
-        String uri = "mongodb+srv://jonahkaplan:rO0D0wKZlQuhb4fm@picluster.pdmldad.mongodb.net/?retryWrites=true&w=majority&appName=PICluster;";
+        String uri = "mongodb+srv://PICoursework:pi-coursework-20@picluster.6cnum4w.mongodb.net/?retryWrites=true&w=majority&appName=PICluster";
 
         // Define a datastore that will connect to the database
         datastore = Morphia.createDatastore(MongoClients.create(uri), "Main");
