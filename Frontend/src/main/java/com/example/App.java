@@ -158,7 +158,6 @@ public class App extends Application {
 
         CalendarPane calendar = new CalendarPane();
         calendar.formatPane();
-
         menugrid.calendarButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
