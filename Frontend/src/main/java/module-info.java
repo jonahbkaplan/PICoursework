@@ -1,4 +1,3 @@
-
 module com.example {
     requires javafx.controls;
     requires javafx.fxml;
@@ -10,8 +9,15 @@ module com.example {
 
     opens com.example to javafx.fxml;
     opens com.example.morphia.entities to morphia.core;
+<<<<<<< HEAD
     exports com.example;
     exports com.example.morphia.entities;
 }
 
 
+=======
+
+    exports com.example;
+    exports com.example.morphia.entities;
+}
+>>>>>>> morus-dev

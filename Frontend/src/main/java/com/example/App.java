@@ -14,7 +14,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -32,8 +31,6 @@ public class App extends Application {
 
     Boolean sidePanelOpen = false;
 
-    Button button;
-
     @Override
     public void start(Stage stage) throws IOException {
 
@@ -41,37 +38,14 @@ public class App extends Application {
 
         // Layout 1
 
-        GridPane grid = new GridPane();
-        grid.setHgap(20);
-        grid.setVgap(20);
-        grid.setPadding(new Insets(0, 10, 0, 10));
+        LogInPane loginpane = new LogInPane();
+        loginpane.formatPane();
 
-        Label subtitle = new Label("Sign in");
-        grid.add(subtitle, 0, 0);
-
-        Label nameLabel = new Label("Username: ");
-        grid.add(nameLabel, 0, 1);
-
-        Label passLabel = new Label("Password: ");
-        grid.add(passLabel, 0, 2);
-
-        TextField nameEntry = new TextField();
-        nameEntry.setMaxWidth(150.0);
-        nameEntry.setMaxHeight(8);
-        grid.add(nameEntry, 1, 1);
-
-        TextField passEntry = new TextField();
-        passEntry.setMaxWidth(150.0);
-        passEntry.setMaxHeight(8);
-        grid.add(passEntry, 1, 2);
-
-        button = new Button("Enter");
-        button.setOnAction(new EventHandler<ActionEvent>() {
+        loginpane.button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
-                String givenUsername = nameEntry.getText().toString();
-                String givenPassword = passEntry.getText().toString();
+                String givenUsername = loginpane.nameEntry.getText().toString();
+                String givenPassword = loginpane.passEntry.getText().toString();
 
                 if (checkdetails(givenUsername, givenPassword)) {
                     stage.setScene(scene2);
@@ -85,9 +59,7 @@ public class App extends Application {
             }
         });
 
-        grid.add(button, 1, 3);
-
-        scene = new Scene(grid, 350, 200);
+        scene = new Scene(loginpane, 350, 200);
         scene.getStylesheets()
                 .add("style1.css");
         stage.setScene(scene);
@@ -131,10 +103,9 @@ public class App extends Application {
         // Menu panel
 
         GridPane blank = new GridPane();
-        GridPane menugrid = new GridPane();
+        MenuPane menugrid = new MenuPane();
+        menugrid.formatPane();
 
-        menugrid.getStyleClass()
-                .add("menu-grid");
         menubutton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -147,26 +118,13 @@ public class App extends Application {
             }
         });
 
-        Button settingsbutton = new Button();
-        settingsbutton.getStyleClass().add("settings-button");
-        menugrid.add(settingsbutton, 0, 8);
-
-        Button homebutton = new Button();
-        homebutton.getStyleClass().add("home-button");
-        menugrid.add(homebutton, 0, 1);
-
         // Home page
 
-        GridPane home = new GridPane();
-        home.setHgap(20);
-        home.setVgap(20);
-        home.setPadding(new Insets(0, 10, 0, 10));
+        HomePane home = new HomePane();
+        home.formatPane(4.0, 3.5);
 
-        Label welcome = new Label("Welcome");
-        home.add(welcome, 0, 0);
         border.setCenter(home);
-
-        homebutton.setOnAction(new EventHandler<ActionEvent>() {
+        menugrid.homebutton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 border.setCenter(home);
@@ -175,22 +133,66 @@ public class App extends Application {
 
         // Settings
 
-        GridPane settings = new GridPane();
-        settings.setHgap(20);
-        settings.setVgap(20);
-        settings.setPadding(new Insets(0, 10, 0, 10));
-
-        settings.add(new Label("Settings"), 0, 0);
-
-        scene2 = new Scene(border, 1200, 700);
-        scene2.getStylesheets().add("style1.css");
-
-        settingsbutton.setOnAction(new EventHandler<ActionEvent>() {
+        SettingsPane settings = new SettingsPane();
+        settings.formatPane();
+        menugrid.settingsbutton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 border.setCenter(settings);
             }
         });
+
+        // Journalling
+
+        JournalPane journal = new JournalPane();
+        journal.formatPane();
+
+        menugrid.journalButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                border.setCenter(journal);
+            }
+        });
+
+        // Calendar
+
+        CalendarPane calendar = new CalendarPane();
+        calendar.formatPane();
+        menugrid.calendarButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                border.setCenter(calendar);
+            }
+        });
+
+        ///// Work session
+
+        WorkSessionPane session = new WorkSessionPane();
+        session.formatPane();
+
+        menugrid.sessionButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                border.setCenter(session);
+            }
+        });
+
+        // Metrics window
+
+        MetricsPane metrics = new MetricsPane();
+        metrics.formatPane();
+
+        menugrid.metricsButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                border.setCenter(metrics);
+            }
+        });
+
+        //////
+
+        scene2 = new Scene(border, 1200, 700);
+        scene2.getStylesheets().add("style1.css");
 
         stage.show();
 

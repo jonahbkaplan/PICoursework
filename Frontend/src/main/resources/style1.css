@@ -68,7 +68,7 @@
     -fx-pref-width: 32;
     -fx-pref-height: 32;
     -fx-background-size: auto;
-    -fx-translate-y: 20;
+    -fx-translate-y: 100;
 }
 .home-button {
     -fx-background-color: transparent;
@@ -77,4 +77,69 @@
     -fx-pref-width: 30;
     -fx-pref-height: 30;
     -fx-background-size: auto;
+}
+.journal-button{
+    -fx-background-color: transparent;
+    -fx-background-image: url('journal.png');
+    -fx-background-position: center;
+    -fx-pref-width: 33;
+    -fx-pref-height: 33;
+    -fx-background-size: auto;
+    -fx-translate-y: 20;
+    -fx-translate-x: 2;
+}
+.calendar-button{
+    -fx-background-color: transparent;
+    -fx-background-image: url('calendar.png');
+    -fx-background-position: center;
+    -fx-pref-width: 35;
+    -fx-pref-height: 35;
+    -fx-background-size: auto;
+    -fx-translate-y: 40;
+    -fx-translate-x: 0;
+}
+.metrics-button{
+    -fx-background-color: transparent;
+    -fx-background-image: url('stonks.png');
+    -fx-background-position: center;
+    -fx-pref-width: 32;
+    -fx-pref-height: 32;
+    -fx-background-size: auto;
+    -fx-translate-y: 80;
+    -fx-translate-x: 0;
+}
+.work-button{
+    -fx-background-color: transparent;
+    -fx-background-image: url('start.png');
+    -fx-background-position: center;
+    -fx-pref-width: 35;
+    -fx-pref-height: 35;
+    -fx-background-size: auto;
+    -fx-translate-y: 60;
+    -fx-translate-x: 0;
+}
+.parting-line{
+    -fx-translate-y: 30;
+}
+.progress-arc{
+    -fx-text-fill: #e8e8e8;
+    -fx-font-family: "Helvetica";
+    -fx-translate-x: 50;
+    -fx-translate-y: 45;
+    -fx-text-alignment: center;
+}
+.progress-percent{
+    -fx-text-fill: #e8e8e8;
+    -fx-font-size: 40pt;
+    -fx-text-alignment: center;
+}
+.progress-small{
+    -fx-font-size: 12pt;
+    -fx-text-alignment: center;
+    -fx-translate-y: -10;
+
+}
+.work-label{
+    -fx-translate-x: 50;
+    -fx-translate-y: 15;
 }
