@@ -68,7 +68,7 @@
     -fx-pref-width: 32;
     -fx-pref-height: 32;
     -fx-background-size: auto;
-    -fx-translate-y: 80;
+    -fx-translate-y: 100;
 }
 .home-button {
     -fx-background-color: transparent;
@@ -96,6 +96,16 @@
     -fx-pref-height: 35;
     -fx-background-size: auto;
     -fx-translate-y: 40;
+    -fx-translate-x: 0;
+}
+.metrics-button{
+    -fx-background-color: transparent;
+    -fx-background-image: url('stonks.png');
+    -fx-background-position: center;
+    -fx-pref-width: 32;
+    -fx-pref-height: 32;
+    -fx-background-size: auto;
+    -fx-translate-y: 80;
     -fx-translate-x: 0;
 }
 .work-button{

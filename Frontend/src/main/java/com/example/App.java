@@ -31,8 +31,6 @@ public class App extends Application {
 
     Boolean sidePanelOpen = false;
 
-    Button button;
-
     @Override
     public void start(Stage stage) throws IOException {
 
@@ -160,7 +158,6 @@ public class App extends Application {
 
         CalendarPane calendar = new CalendarPane();
         calendar.formatPane();
-
         menugrid.calendarButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -177,6 +174,18 @@ public class App extends Application {
             @Override
             public void handle(ActionEvent event) {
                 border.setCenter(session);
+            }
+        });
+
+        // Metrics window
+
+        MetricsPane metrics = new MetricsPane();
+        metrics.formatPane();
+
+        menugrid.metricsButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                border.setCenter(metrics);
             }
         });
 

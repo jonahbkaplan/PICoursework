@@ -10,6 +10,7 @@ public class MenuPane extends GridPane {
     public Button journalButton = new Button();
     public Button calendarButton = new Button();
     public Button sessionButton = new Button();
+    public Button metricsButton = new Button();
 
     public void formatPane() {
 
@@ -32,5 +33,8 @@ public class MenuPane extends GridPane {
 
         sessionButton.getStyleClass().add("work-button");
         this.add(sessionButton, 0, 4);
+
+        metricsButton.getStyleClass().add("metrics-button");
+        this.add(metricsButton, 0, 5);
     }
 }
