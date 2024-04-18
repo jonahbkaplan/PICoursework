@@ -10,8 +10,8 @@ import certifi
 import traceback
 
 ca = certifi.where()
-mongo_client = pymongo.MongoClient()
-# "mongodb+srv://ThomasMycer:pi-coursework-37@picluster.6cnum4w.mongodb.net/?retryWrites=true&w=majority&appName=PICluster&tls=true")
+mongo_client = pymongo.MongoClient(
+"mongodb+srv://PICoursework:pi-coursework-20@picluster.6cnum4w.mongodb.net/?retryWrites=true&w=majority&appName=PICluster")
 
 users = mongo_client.user_db.users
 
@@ -211,25 +211,6 @@ def delete_user():
     # Log out the user from this session by deleting the token
     del tokens[token]
     return {"success": True}
-
-
-@app.route('/metrics', methods=["PUT", "OPTIONS"])
-def request_from_db():
-    if request.method == "OPTIONS":
-        return {"Access-Control-Allow-Origin": "*"}
-
-    try:
-        user, token = get_user_from_token()
-
-        # Check if the token was valid
-        if not token:
-            return {"success": False, "message": "Invalid token"}, 401
-
-        return {"success": True, "message": "Here is some dummy data", "Stress": 0.5, "Productivity": 0.8}
-
-    except KeyError:
-        return {"success": False, "message": "Missing required fields (google_email)"}, 400
-
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

@@ -21,6 +21,18 @@ To use the **AuthService** in the frontend, the following steps are required:
 - Run the **AuthService** with `python app.py`
 - If accessing locally, the base URL will be `http://localhost:5000`
 
+## MongoDB Connection
+
+Within MongoDB, a user database is created which contains a collection of users. 
+
+### The following is stored against each user:
+
+- **user_id**: A unique identifier for each user
+- **user**: The user's username
+- **email**: The user's email
+- **pass_hash**: The user's hashed password
+- **salt** : The salt used to hash the password
+
 # Endpoints
 
 ## POST /signup
