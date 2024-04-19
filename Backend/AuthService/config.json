@@ -1,0 +1,8 @@
+{
+  "mongo_uri": "mongodb+srv://PICoursework:pi-coursework-20@picluster.6cnum4w.mongodb.net/?retryWrites=true&w=majority&appName=PICluster",
+  "host": "0.0.0.0",
+  "port": 5000,
+  "addAdmin": true,
+  "debug": true,
+  "run_on_wsgi": false
+}
