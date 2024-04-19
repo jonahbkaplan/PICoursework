@@ -26,8 +26,10 @@ import javafx.stage.Stage;
  */
 public class App extends Application {
 
-    Scene scene;
+    Scene loginScene;
     Scene scene2;
+
+    Scene signupScene;
 
     Boolean sidePanelOpen = false;
 
@@ -41,7 +43,20 @@ public class App extends Application {
         LogInPane loginpane = new LogInPane();
         loginpane.formatPane();
 
-        loginpane.button.setOnAction(new EventHandler<ActionEvent>() {
+        SignupPane signupPane = new SignupPane();
+        signupPane.formatPane();
+
+        loginpane.signupPageSwitch.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                signupScene = new Scene(signupPane, 350, 300);
+                signupScene.getStylesheets()
+                        .add("style1.css");
+                stage.setScene(signupScene);
+            }
+        });
+
+        loginpane.submit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 String givenUsername = loginpane.nameEntry.getText().toString();
@@ -59,10 +74,10 @@ public class App extends Application {
             }
         });
 
-        scene = new Scene(loginpane, 350, 200);
-        scene.getStylesheets()
+        loginScene = new Scene(loginpane, 350, 250);
+        loginScene.getStylesheets()
                 .add("style1.css");
-        stage.setScene(scene);
+        stage.setScene(loginScene);
 
         // Layout 2
 
