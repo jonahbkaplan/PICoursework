@@ -1,13 +1,13 @@
 import os
 import json
 
-config = json.load(open("config.json"), "r")
+auth_config = json.load(open("auth_config.json"))
 
 workers = int(os.environ.get('GUNICORN_WORKERS', '2'))
 
 threads = int(os.environ.get('GUNICORN_THREADS', '4'))
 
-bind = os.environ.get("GUNICORN_BIND", f"{config['host']}:{config['port']}")
+bind = os.environ.get("GUNICORN_BIND", f"{auth_config['host']}:{auth_config['port']}")
 
 forwarded_allow_ips = "*"
 

@@ -11,14 +11,14 @@ import traceback
 import sys
 import json
 
-config = json.load(open("config.json"), "r")
+auth_config = json.load(open("auth_config.json"))
 
 ca = certifi.where()
-mongo_client = pymongo.MongoClient(config["mongo_uri"])
+mongo_client = pymongo.MongoClient(auth_config["mongo_uri"])
 users = mongo_client.user_db.users
 
 salt = bcrypt.gensalt()
-if config["add_admin"]:
+if auth_config["add_admin"]:
     users.insert_one({"user_id": "1",
                       "user": "admin",
                       "pass_hash": bcrypt.hashpw("admin".encode(), salt).decode("ascii"),
@@ -215,7 +215,7 @@ def delete_user():
     return {"success": True}
 
 if __name__ == '__main__':
-    if config["run_on_wsgi"]:
-        app.run(debug=config["debug"], port=config["port"], host=config["host"])
+    if auth_config["run_on_wsgi"]:
+        app.run(debug=auth_config["debug"], port=auth_config["port"], host=auth_config["host"])
     else:
-        app.run(debug=config["debug"], port=config["port"])
+        app.run(debug=auth_config["debug"], port=auth_config["port"])
