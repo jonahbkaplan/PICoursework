@@ -8,6 +8,7 @@ from email.utils import parseaddr
 import pymongo
 import certifi
 import traceback
+import sys
 
 ca = certifi.where()
 mongo_client = pymongo.MongoClient(
@@ -213,4 +214,7 @@ def delete_user():
     return {"success": True}
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    if sys.argv[1] == "prod":
+        app.run(debug=True, port=5000, host="0.0.0.0")
+    else:
+        app.run(debug=True, port=5000)
