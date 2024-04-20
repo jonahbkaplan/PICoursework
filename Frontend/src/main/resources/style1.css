@@ -7,7 +7,7 @@
 }                
 .label{
     -fx-text-fill: #e8e8e8;
-
+/*  */
 }
 .button{
     -fx-background-color: #d3d3d3;
@@ -21,7 +21,7 @@
     -fx-highlight-text-fill: #838383;
     -fx-prompt-text-fill: #838383;
 }
-.menu-button {
+.collapase-menu-button {
     -fx-background-color: transparent; 
     -fx-background-image: url('menuicon2.png');
     -fx-background-position: center;
@@ -43,9 +43,27 @@
     -fx-text-fill: #e8e8e8;
     -fx-font-family: "Lucida Bright";
     -fx-font-size: 10pt;
-    -fx-translate-x: 1350;
-    -fx-translate-y: -3;
     -fx-text-alignment: center;
+}
+
+.menu-button{
+    -fx-text-fill: #000000;
+}
+.menu-item:focused{
+    -fx-text-fill: #000000;
+    -fx-backgroud-color: #292929;
+}
+
+.menu-item{
+    -fx-text-fill: #000000;
+    -fx-backgroud-color: #292929;
+}
+.menu-item .label {
+    -fx-text-fill: rgb(27, 26, 26);
+}
+
+.context-menu{
+    -fx-text-fill: #000000;
 }
 
 .menu-grid{
@@ -137,9 +155,37 @@
     -fx-font-size: 12pt;
     -fx-text-alignment: center;
     -fx-translate-y: -10;
-
 }
 .work-label{
     -fx-translate-x: 50;
     -fx-translate-y: 15;
+}
+
+.borders{
+    -fx-border-insets: 10;
+    -fx-border-width: 20px;
+    -fx-padding: 10;
+}
+.work-backpane{
+    -fx-border-insets: 10;
+    -fx-border-width: 20px;
+    -fx-padding: 10;
+    -fx-background-color: #161616;
+    -fx-hgap: 20;
+    -fx-vgap: 20;
+    -fx-stroke-borders: 1 ;
+}
+.work-gridpanes{
+    -fx-border-insets: 10;
+    -fx-border-width: 20px;
+    -fx-padding: 10;
+    -fx-background-color: #1d1d1d;
+    -fx-background-radius: 10;
+}
+
+.task-table-cell{
+
+    width: 20px;
+    -fx-padding: 10;
+
 }
