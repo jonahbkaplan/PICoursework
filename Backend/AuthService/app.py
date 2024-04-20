@@ -216,6 +216,6 @@ def delete_user():
 
 if __name__ == '__main__':
     if auth_config["run_on_wsgi"]:
-        app.run(debug=auth_config["debug"], port=auth_config["port"], host=auth_config["host"])
+        app.run(debug=auth_config["debug"])
     else:
         app.run(debug=auth_config["debug"], port=auth_config["port"])
