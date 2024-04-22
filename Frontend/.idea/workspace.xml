@@ -9,6 +9,13 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/SignupPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/SignupPane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/morphia/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/morphia/entities/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/App$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/App$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/App$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/App$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/App$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/App$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/App$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/App$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/App$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/App$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/App.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/style1.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/style1.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,7 +143,7 @@
       <workItem from="1713522108850" duration="910000" />
       <workItem from="1713523097184" duration="4340000" />
       <workItem from="1713539095709" duration="24000" />
-      <workItem from="1713795756728" duration="954000" />
+      <workItem from="1713795756728" duration="1276000" />
     </task>
     <servers />
   </component>
