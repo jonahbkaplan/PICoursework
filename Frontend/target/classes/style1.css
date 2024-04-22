@@ -39,6 +39,16 @@
     /* -fx-translate-z: 0; */
 }
 
+.logout-button{
+    -fx-text-fill: #e8e8e8;
+    -fx-bg: transparent;
+    -fx-font-family: "Lucida Calligraphy";
+    -fx-font-size: 20pt;
+    -fx-translate-x: 1100;
+    -fx-translate-y: -9;
+    /* -fx-translate-z: 0; */
+}
+
 .time-display{
     -fx-text-fill: #e8e8e8;
     -fx-font-family: "Lucida Bright";
@@ -47,6 +57,7 @@
     -fx-translate-y: -3;
     -fx-text-alignment: center;
 }
+
 
 .menu-grid{
     -fx-background-color: #1d1d1d;

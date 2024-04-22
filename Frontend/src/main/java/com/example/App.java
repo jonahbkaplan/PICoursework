@@ -3,9 +3,14 @@ package com.example;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import com.example.morphia.entities.Task;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.concurrent.ScheduledService;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -27,16 +32,47 @@ import javafx.stage.Stage;
 public class App extends Application {
 
     Scene loginScene;
-    Scene scene2;
+    Scene mainscene;
 
     Scene signupScene;
 
     Boolean sidePanelOpen = false;
 
+    AuthConnection auth = new AuthConnection();
+
+    AuthToken token;
+
     @Override
     public void start(Stage stage) throws IOException {
-        stage.setTitle("focus");
+        token = new AuthToken();
 
+        ScheduledService authRefreshService = new ScheduledService() {
+            @Override
+            protected javafx.concurrent.Task createTask() {
+                javafx.concurrent.Task task = new javafx.concurrent.Task() {
+                    @Override
+                    protected Object call() throws Exception {
+                        if(!token.refreshToken()) {
+                            System.out.println("Token expired");
+                            try{
+                                Platform.runLater(() -> {
+                                    if (stage.getScene() == mainscene)
+                                        stage.setScene(loginScene);
+                                });
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            System.out.println("Changed Scene");
+                        }
+                        return null;
+                    }
+                };
+                return task;
+            };
+        };
+        authRefreshService.setPeriod(javafx.util.Duration.minutes(1));
+
+        stage.setTitle("focus");
         // Layout 1
 
         LogInPane loginPane = new LogInPane();
@@ -75,19 +111,24 @@ public class App extends Application {
                 String givenUsername = loginPane.nameEntry.getText().toString();
                 String givenPassword = loginPane.passEntry.getText().toString();
 
-                if (checkdetails(givenUsername, givenPassword)) {
-                    stage.setScene(scene2);
-                } else {
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Sign in details not found");
-                    alert.setContentText("Please check your username and password");
-                    alert.showAndWait();
+                if (checklogin(givenUsername, givenPassword)) {
+                    stage.setScene(mainscene);
                 }
             }
         });
 
-        stage.setScene(loginScene);
+        signupPane.submit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String givenUsername = signupPane.nameEntry.getText().toString();
+                String givenEmail = signupPane.emailEntry.getText().toString();
+                String givenPassword = signupPane.passEntry.getText().toString();
+
+                if (checksignup(givenUsername, givenEmail, givenPassword)) {
+                    stage.setScene(mainscene);
+                }
+            }
+        });
 
         // Layout 2
 
@@ -215,9 +256,17 @@ public class App extends Application {
 
         ////
 
-        scene2 = new Scene(border, 1200, 700);
-        scene2.getStylesheets().add("style1.css");
+        mainscene = new Scene(border, 1200, 700);
+        mainscene.getStylesheets().add("style1.css");
 
+        if (token.refreshToken())
+        {
+            stage.setScene(mainscene);
+        } else {
+            stage.setScene(loginScene);
+        }
+
+        authRefreshService.start();
         stage.show();
 
     }
@@ -226,7 +275,42 @@ public class App extends Application {
         launch(args);
     }
 
-    public static boolean checkdetails(String username, String password) { // Use this for authention
-        return true;
+    public boolean checklogin(String username, String password){ // Use this for authention
+        try {
+            AuthConnection.LoginResponse response = auth.login(username, password);
+            if (response.success()) {
+                token.setToken(response.authtoken());
+                return true;
+            } else {
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText("Invalid Details");
+                alert.setContentText(response.message());
+                alert.showAndWait();
+                return false;
+            }
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean checksignup(String username, String email, String password){ // Use this for authention
+        try {
+            AuthConnection.LoginResponse response = auth.signup(username, email, password);
+            if (response.success()) {
+                token.setToken(response.authtoken());
+                return true;
+            } else {
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText("Invalid Signup Details");
+                alert.setContentText(response.message());
+                alert.showAndWait();
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

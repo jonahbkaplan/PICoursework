@@ -18,26 +18,20 @@ public class AuthConnection {
         boolean success, String authtoken, String message
      ){}
     public record RefreshResponse(
-       boolean success, String message
+       boolean success
     ){}
-
-
-
 
     private final HttpClient httpClient = HttpClient.newBuilder()
             .version(HttpClient.Version.HTTP_2)
             .build();
-
-
-
 
     public LoginResponse signup(String user, String email, String password) throws Exception {
         String response = sendPost("http://localhost:5000/signup",Map.of("user",user,"email",email,"password",password), " ");
         JSONObject jo = new JSONObject(response);
         String authtoken = null;
         String message = null;
-        if(jo.has("authtoken")){
-            authtoken = jo.getString("authtoken");
+        if(jo.has("auth-token")){
+            authtoken = jo.getString("auth-token");
         }
         else{
             message = jo.getString("message");
@@ -49,8 +43,8 @@ public class AuthConnection {
         JSONObject jo = new JSONObject(response);
         String authtoken = null;
         String message = null;
-        if(jo.has("authtoken")){
-            authtoken = jo.getString("authtoken");
+        if(jo.has("auth-token")){
+            authtoken = jo.getString("auth-token");
         }
         else{
             message = jo.getString("message");
@@ -63,14 +57,15 @@ public class AuthConnection {
 
     }
 
-    public RefreshResponse refreshToken(String authoken,String useremail, String password) throws Exception{
-        String response = sendPost("http://localhost:5000/login",Map.of("useremail",useremail,"password",password), authoken);
-        JSONObject jo = new JSONObject(response);
-        String message = null;
-        if(jo.has("message")){
-            message = jo.getString("authtoken");
+    public RefreshResponse refreshToken(String authtoken) {
+        try {
+            String response = sendPost("http://localhost:5000/refresh_token", new HashMap<>(), authtoken);
+            JSONObject jo = new JSONObject(response);
+            return new RefreshResponse(jo.getBoolean("success"));
         }
-        return new RefreshResponse(jo.getBoolean("success"),message);
+        catch (Exception e){;
+            return new RefreshResponse(false);
+        }
     }
 
 //    private String sendGet(String url) throws Exception {
@@ -92,7 +87,7 @@ public class AuthConnection {
         HttpRequest request = HttpRequest.newBuilder()
                 .POST(buildFormDataFromMap(data))
                 .uri(URI.create(url))
-                .setHeader("authtoken", header) // add request header
+                .setHeader("auth-token", header) // add request header
                 .header("Content-Type", "application/json")
                 .build();
 
@@ -103,16 +98,8 @@ public class AuthConnection {
     }
 
     private static HttpRequest.BodyPublisher buildFormDataFromMap(Map<Object, Object> data) {
-        var builder = new StringBuilder();
-        for (Map.Entry<Object, Object> entry : data.entrySet()) {
-            if (!builder.isEmpty()) {
-                builder.append("&");
-            }
-            builder.append(URLEncoder.encode(entry.getKey().toString(), StandardCharsets.UTF_8));
-            builder.append("=");
-            builder.append(URLEncoder.encode(entry.getValue().toString(), StandardCharsets.UTF_8));
-        }
-        return HttpRequest.BodyPublishers.ofString(builder.toString());
+        JSONObject jo = new JSONObject(data);
+        return HttpRequest.BodyPublishers.ofString(jo.toString());
     }
 
 

@@ -80,6 +80,7 @@ def login():
     try:
         if request.method == "OPTIONS":
             return {"Access-Control-Allow-Origin": "*"}
+
         data = request.get_json()
 
         if data["useremail"] == "" or data["password"] == "":
@@ -99,7 +100,7 @@ def login():
             # Create token and send a successful login response
             token = create_token(user["user_id"])
 
-            return {"success": True, "authtoken": token}
+            return {"success": True, "auth-token": token}
 
         return {"success": False, "message": "Username/Email or password is incorrect"}
     except KeyError:
@@ -129,7 +130,7 @@ def signup():
         if request.method == "OPTIONS":
             return {"Access-Control-Allow-Origin": "*"}
         data = request.get_json()
-
+        print(data)
         if data["user"] == "" or data["email"] == "" or data["password"] == "":
             raise KeyError()
 
@@ -139,7 +140,7 @@ def signup():
         if len(data["user"]) < 3 or len(data["user"]) > 20:
             return {"success": False, "message": "Username must be between 3 and 20 characters long"}
 
-        if parseaddr(data["email"])[1] != data["email"]:
+        if "@" not in data["email"] or "." not in data["email"] or parseaddr(data["email"])[1] != data["email"]:
             return {"success": False, "message": "Invalid email format"}
 
         if len(data["password"]) < 8:
@@ -172,7 +173,7 @@ def signup():
 
         token = create_token(new_user["user_id"])
 
-        return {"success": True, "authtoken": token}
+        return {"success": True, "auth-token": token}
     except KeyError:
         print(traceback.format_exc())
         return {"success": False, "message": "Missing required fields (user, email, password)"}, 400
