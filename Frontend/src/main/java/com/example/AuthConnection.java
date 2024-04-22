@@ -27,15 +27,7 @@ public class AuthConnection {
             .version(HttpClient.Version.HTTP_2)
             .build();
 
-    public static void main(String[] args) {
-        try {
-            new AuthConnection().sendPost();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 
 
     public LoginResponse signup(String user, String email, String password) throws Exception {
@@ -54,7 +46,7 @@ public class AuthConnection {
 
     }
 
-    public RefreshResponse refreshToken(String authoken) throws Exception{
+    public RefreshResponse refreshToken(String authoken,String useremail, String password) throws Exception{
         String response = sendPost("http://localhost:5000/login",Map.of("useremail",useremail,"password",password), " ");
         RefreshResponse result =  new RefreshResponse(false,null);
         return result;
