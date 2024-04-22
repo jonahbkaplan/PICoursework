@@ -6,6 +6,8 @@ module com.example {
     requires org.mongodb.bson;
     requires org.mongodb.driver.sync.client;
     requires org.mongodb.driver.core;
+    requires java.net.http;
+    requires org.json;
 
     opens com.example to javafx.fxml;
     opens com.example.morphia.entities to morphia.core;
