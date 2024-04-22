@@ -146,4 +146,5 @@
 .preview-title{
     -fx-alignment: center;
     -fx-translate-x: 50;
+    -fx-text-fill: #e8e8e8;
 }
