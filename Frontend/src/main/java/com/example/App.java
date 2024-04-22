@@ -202,19 +202,18 @@ public class App extends Application {
             }
         });
 
-        // Metrics window
 
-        //MetricsPane metrics = new MetricsPane();
-        //metrics.formatPane();
+        MetricsPane metrics = new MetricsPane();
+        metrics.formatPane();
 
-//        menugrid.metricsButton.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                border.setCenter(metrics);
-//            }
-//        });
+        menugrid.metricsButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                border.setCenter(metrics);
+            }
+        });
 
-        //////
+        ////
 
         scene2 = new Scene(border, 1200, 700);
         scene2.getStylesheets().add("style1.css");
