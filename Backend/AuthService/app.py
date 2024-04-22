@@ -8,28 +8,30 @@ from email.utils import parseaddr
 import pymongo
 import certifi
 import traceback
+import sys
+import json
+
+auth_config = json.load(open("auth_config.json"))
 
 ca = certifi.where()
-mongo_client = pymongo.MongoClient(
-"mongodb+srv://PICoursework:pi-coursework-20@picluster.6cnum4w.mongodb.net/?retryWrites=true&w=majority&appName=PICluster")
-
+mongo_client = pymongo.MongoClient(auth_config["mongo_uri"])
 users = mongo_client.user_db.users
 
 salt = bcrypt.gensalt()
-users.insert_one({"user_id": "1",
-                  "user": "admin",
-                  "pass_hash": bcrypt.hashpw("admin".encode(), salt).decode("ascii"),
-                  "salt": salt.decode("ascii"),
-                  "email": "admin@gmail.com"})
+if auth_config["add_admin"]:
+    users.insert_one({"user_id": "1",
+                      "user": "admin",
+                      "pass_hash": bcrypt.hashpw("admin".encode(), salt).decode("ascii"),
+                      "salt": salt.decode("ascii"),
+                      "email": "admin@gmail.com"})
 
 alphanum = string.ascii_letters + string.digits
 allowed_special = "!@#$%^&*_+?"
 
 tokens = {}
 
-app = Flask(__name__, )
-CORS(app, resources={r"/*": {"origins": ["http://localhost:3000", "http://127.0.0.1:3000"]}})
-
+app = Flask("AuthService")
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 def create_token(user_id):
     # Create a new token that will expire in 1 hour
@@ -213,4 +215,7 @@ def delete_user():
     return {"success": True}
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    if auth_config["run_on_wsgi"]:
+        app.run(debug=auth_config["debug"])
+    else:
+        app.run(debug=auth_config["debug"], port=auth_config["port"])

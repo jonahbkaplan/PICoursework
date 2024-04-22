@@ -143,3 +143,8 @@
     -fx-translate-x: 50;
     -fx-translate-y: 15;
 }
+.preview-title{
+    -fx-alignment: center;
+    -fx-translate-x: 50;
+    -fx-text-fill: #e8e8e8;
+}

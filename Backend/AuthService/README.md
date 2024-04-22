@@ -18,8 +18,10 @@ Below, please find the different endpoints that can be accessed and the expected
 
 To use the **AuthService** in the frontend, the following steps are required:
 - Install all python dependencies with `pip install -r requirements.txt`
-- Run the **AuthService** with `python app.py`
-- If accessing locally, the base URL will be `http://localhost:5000`
+- Run the **AuthService** with `python app.py` to access locally. The base URL will be `http://localhost:5000`
+
+## Remote Access
+- To access remotely, run `gunicorn --config gunicorn_config.py app:app` in a webserver. The base URL will be `http://<server_ip>/`
 
 ## MongoDB Connection
 
