@@ -8,7 +8,7 @@ import javafx.scene.layout.GridPane;
 
 public class SignupPane extends GridPane {
     public Button submit = new Button("Signup");
-    public Button signupPageSwitch = new Button("Have an account? Log In");
+    public Button loginPageSwitch = new Button("Have an account? Log In");
     public TextField nameEntry = new TextField();
 
     public TextField emailEntry = new TextField();
@@ -46,6 +46,6 @@ public class SignupPane extends GridPane {
 
         this.add(submit, 1, 4);
 
-        this.add(signupPageSwitch, 1, 5);
+        this.add(loginPageSwitch, 1, 5);
     }
 }

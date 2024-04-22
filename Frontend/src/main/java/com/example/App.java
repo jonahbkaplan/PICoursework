@@ -35,32 +35,45 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-
         stage.setTitle("focus");
 
         // Layout 1
 
-        LogInPane loginpane = new LogInPane();
-        loginpane.formatPane();
+        LogInPane loginPane = new LogInPane();
+        loginPane.formatPane();
+        loginScene = new Scene(loginPane, 350, 300);
+        loginScene.getStylesheets()
+                .add("style1.css");
 
         SignupPane signupPane = new SignupPane();
         signupPane.formatPane();
+        signupScene = new Scene(signupPane, 350, 300);
+        signupScene.getStylesheets()
+                .add("style1.css");
 
-        loginpane.signupPageSwitch.setOnAction(new EventHandler<ActionEvent>() {
+        loginPane.signupPageSwitch.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                signupScene = new Scene(signupPane, 350, 300);
                 signupScene.getStylesheets()
                         .add("style1.css");
                 stage.setScene(signupScene);
             }
         });
 
-        loginpane.submit.setOnAction(new EventHandler<ActionEvent>() {
+        signupPane.loginPageSwitch.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                String givenUsername = loginpane.nameEntry.getText().toString();
-                String givenPassword = loginpane.passEntry.getText().toString();
+                loginScene.getStylesheets()
+                        .add("style1.css");
+                stage.setScene(loginScene);
+            }
+        });
+
+        loginPane.submit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String givenUsername = loginPane.nameEntry.getText().toString();
+                String givenPassword = loginPane.passEntry.getText().toString();
 
                 if (checkdetails(givenUsername, givenPassword)) {
                     stage.setScene(scene2);
@@ -74,9 +87,6 @@ public class App extends Application {
             }
         });
 
-        loginScene = new Scene(loginpane, 350, 250);
-        loginScene.getStylesheets()
-                .add("style1.css");
         stage.setScene(loginScene);
 
         // Layout 2

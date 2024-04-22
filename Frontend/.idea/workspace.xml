@@ -6,6 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="cb0f0c87-8b21-4b46-96e1-a1904e38ee8d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/SignupPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/SignupPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/morphia/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/morphia/entities/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +51,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "reactwauth",
-    "last_opened_file_path": "C:/Users/AlexD/Documents/Git/ReactFrontend",
+    "last_opened_file_path": "C:/Users/AlexD/Documents/Git/PICoursework/Frontend",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -133,21 +136,11 @@
       <workItem from="1713522108850" duration="910000" />
       <workItem from="1713523097184" duration="4340000" />
       <workItem from="1713539095709" duration="24000" />
+      <workItem from="1713795756728" duration="954000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/App.java</url>
-          <line>216</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
