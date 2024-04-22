@@ -1,0 +1,11 @@
+/* https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html */
+.root{
+
+}
+.pie{
+
+}
+.line{
+    -fx-horizontal-grid-lines-visible: false;
+    -fx-vertical-grid-lines-visible: false;
+}
