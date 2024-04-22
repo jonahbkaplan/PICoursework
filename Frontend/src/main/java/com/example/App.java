@@ -17,6 +17,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
@@ -80,7 +82,7 @@ public class App extends Application {
         focus.getStyleClass().add("title-font");
 
         Button menubutton = new Button();
-        menubutton.getStyleClass().add("menu-button");
+        menubutton.getStyleClass().add("collapase-menu-button");
 
         Label time = new Label();
         time.getStyleClass().add("time-display");
@@ -93,7 +95,11 @@ public class App extends Application {
         };
         timer.start();
 
-        top.getChildren().addAll(menubutton, focus, time);
+        VBox vbox = new VBox();
+        vbox.prefWidth(1200);
+        HBox.setHgrow(vbox, Priority.ALWAYS);
+
+        top.getChildren().addAll(menubutton, focus, vbox, time);
 
         Line line = new Line(0, 50, 2000, 50);
         line.setStroke(Color.WHITE);
