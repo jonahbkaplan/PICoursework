@@ -64,7 +64,7 @@ public class AuthConnection {
     }
 
     public RefreshResponse refreshToken(String authoken,String useremail, String password) throws Exception{
-        String response = sendPost("http://localhost:5000/login",Map.of("useremail",useremail,"password",password), " ");
+        String response = sendPost("http://localhost:5000/login",Map.of("useremail",useremail,"password",password), authoken);
         JSONObject jo = new JSONObject(response);
         String message = null;
         if(jo.has("message")){
