@@ -5,16 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cb0f0c87-8b21-4b46-96e1-a1904e38ee8d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Backend/AuthService/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Backend/AuthService/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/SignupPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/SignupPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/morphia/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/morphia/entities/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/AuthConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/AuthConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/AuthToken.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/AuthToken.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/SettingsPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/SettingsPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/style1.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/style1.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/App$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/App$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/App$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/App$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/App$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/App$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/App$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/App$4.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/App$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/App$5.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/App.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/module-info.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/style1.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/style1.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -25,6 +31,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -52,25 +59,30 @@
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "reactwauth",
-    "last_opened_file_path": "C:/Users/AlexD/Documents/Git/PICoursework/Frontend",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "configurable.group.appearance",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;reactwauth&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/AlexD/Documents/Git/PICoursework/Frontend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.example" />
+    </key>
+  </component>
   <component name="RunManager" selected="Application.App">
     <configuration name="App" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="openjdk-22" />
@@ -143,7 +155,8 @@
       <workItem from="1713522108850" duration="910000" />
       <workItem from="1713523097184" duration="4340000" />
       <workItem from="1713539095709" duration="24000" />
-      <workItem from="1713795756728" duration="1276000" />
+      <workItem from="1713795756728" duration="6257000" />
+      <workItem from="1713804685571" duration="8098000" />
     </task>
     <servers />
   </component>

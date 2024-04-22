@@ -14,7 +14,5 @@ public class SettingsPane extends GridPane {
         this.setPadding(new Insets(0, 10, 0, 10));
         this.add(new Label("Settings"), 0, 0);
 
-        
-
     }
 }
