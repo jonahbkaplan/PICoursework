@@ -11,6 +11,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
+import org.json.*;
 
 public class AuthConnection {
      public record LoginResponse(
@@ -32,13 +33,29 @@ public class AuthConnection {
 
     public LoginResponse signup(String user, String email, String password) throws Exception {
         String response = sendPost("http://localhost:5000/signup",Map.of("user",user,"email",email,"password",password), " ");
-        LoginResponse result =  new LoginResponse(false,null,null);
-        return result;
+        JSONObject jo = new JSONObject(response);
+        String authtoken = null;
+        String message = null;
+        if(jo.has("authtoken")){
+            authtoken = jo.getString("authtoken");
+        }
+        else{
+            message = jo.getString("message");
+        }
+        return new LoginResponse(jo.getBoolean("success"),authtoken,message);
     }
     public LoginResponse login(String useremail, String password) throws Exception {
         String response = sendPost("http://localhost:5000/login",Map.of("useremail",useremail,"password",password), " ");
-        LoginResponse result =  new LoginResponse(false,null,null);
-        return result;
+        JSONObject jo = new JSONObject(response);
+        String authtoken = null;
+        String message = null;
+        if(jo.has("authtoken")){
+            authtoken = jo.getString("authtoken");
+        }
+        else{
+            message = jo.getString("message");
+        }
+        return new LoginResponse(jo.getBoolean("success"),authtoken,message);
     }
 
     public void logout(String authtoken) throws Exception {
@@ -48,30 +65,34 @@ public class AuthConnection {
 
     public RefreshResponse refreshToken(String authoken,String useremail, String password) throws Exception{
         String response = sendPost("http://localhost:5000/login",Map.of("useremail",useremail,"password",password), " ");
-        RefreshResponse result =  new RefreshResponse(false,null);
-        return result;
+        JSONObject jo = new JSONObject(response);
+        String message = null;
+        if(jo.has("message")){
+            message = jo.getString("authtoken");
+        }
+        return new RefreshResponse(jo.getBoolean("success"),message);
     }
 
-    private String sendGet(String url) throws Exception {
-
-        HttpRequest request = HttpRequest.newBuilder()
-                .GET()
-                .uri(URI.create(url))
-                .setHeader("User-Agent", "Java 11 HttpClient Bot")
-                .build();
-
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-        return response.body();
-
-    }
+//    private String sendGet(String url) throws Exception {
+//
+//        HttpRequest request = HttpRequest.newBuilder()
+//                .GET()
+//                .uri(URI.create(url))
+//                .setHeader("User-Agent", "Java 11 HttpClient Bot")
+//                .build();
+//
+//        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+//
+//        return response.body();
+//
+//    }
 
     private String sendPost(String url, Map<Object,Object> data , String header) throws Exception {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .POST(buildFormDataFromMap(data))
                 .uri(URI.create(url))
-                .setHeader("User-Agent", header) // add request header
+                .setHeader("authtoken", header) // add request header
                 .header("Content-Type", "application/json")
                 .build();
 
@@ -91,7 +112,6 @@ public class AuthConnection {
             builder.append("=");
             builder.append(URLEncoder.encode(entry.getValue().toString(), StandardCharsets.UTF_8));
         }
-        System.out.println(builder.toString());
         return HttpRequest.BodyPublishers.ofString(builder.toString());
     }
 
