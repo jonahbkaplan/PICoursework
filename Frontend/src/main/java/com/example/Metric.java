@@ -1,12 +1,19 @@
 package com.example;
 
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.scene.chart.Chart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+
+import java.awt.*;
 
 public class Metric {
 
@@ -27,15 +34,19 @@ public class Metric {
     public GridPane getPreview(){
        GridPane pane = new GridPane();
        pane.setGridLinesVisible(true);
-       pane.setMaxSize(100,100);
-       pane.getColumnConstraints().add(new ColumnConstraints(100));
+       pane.setMaxSize(110,110);
+       pane.getColumnConstraints().add(new ColumnConstraints(220));
        Text title = new Text(this.name);
+       title.setFont(Font.font("default", FontWeight.BOLD,20));
+       GridPane.setHalignment(title, HPos.CENTER);
 
-       pane.getStylesheets().add("style1.css");
-       title.getStyleClass().add("preview-title");
        if(chart.getChart() instanceof LineChart){
            ((LineChart<?, ?>) chart.getChart()).getYAxis().setLabel("");
        }
+
+       title.setFill(Color.WHITE);
+       title.setTextAlignment(TextAlignment.CENTER);
+
        pane.add(title,0,0);
        pane.add(chart,0,1);
        pane.setOnMouseClicked(this::onMouseClicked);

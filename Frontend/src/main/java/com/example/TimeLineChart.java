@@ -1,9 +1,12 @@
 package com.example;
 
+import javafx.geometry.HPos;
 import javafx.scene.chart.Chart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.StringConverter;
@@ -25,7 +28,11 @@ public class TimeLineChart extends TimeChart{
         super(yLabel, unit, range);
 
         Text lbl = new Text("Average:");
+        lbl.setFill(Color.WHITE);
+        avgText.setFill(Color.WHITE);
+        GridPane.setHalignment(lbl, HPos.CENTER);
         lbl.setTextAlignment(TextAlignment.CENTER);
+        GridPane.setHalignment(avgText,HPos.CENTER);
 
         add(lbl,0,0);
         add(avgText,0,1);
