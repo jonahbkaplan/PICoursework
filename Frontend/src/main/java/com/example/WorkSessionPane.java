@@ -35,9 +35,12 @@ public class WorkSessionPane extends BorderPane {
 
     public Boolean inSession = false;
     public LocalDateTime currentStartTime;
-    public List<Task> allTasks = new ArrayList<Task>();
 
-    public ArrayList<FocusSession> recordedSessions = new ArrayList<FocusSession>();
+    // For Backend :
+    public List<Task> allTasks = new ArrayList<Task>(); // This is an arraylist that will contain all tasks first taken
+                                                        // from server then uploaded to it
+    public ArrayList<FocusSession> recordedSessions = new ArrayList<FocusSession>(); // This contains all focussession
+                                                                                     // to be uploaded to the server
 
     public void formatPane() {
 
@@ -101,7 +104,6 @@ public class WorkSessionPane extends BorderPane {
                             .getLong(ChronoField.MINUTE_OF_DAY);
                     recordedSessions.add(new FocusSession(currentTasks, timeElapsed)); // timeElapsed is number of
                                                                                        // minutes
-
                     currentDisplayTasks.clear();
                     currentTaskList.getChildren().clear();
                 }
