@@ -65,7 +65,13 @@
 .context-menu{
     -fx-text-fill: #000000;
 }
-
+.menu-button .label {
+    -fx-text-fill: rgb(27, 26, 26);
+}
+.menu-button{
+    -fx-text-fill: #000000;
+    -fx-backgroud-color: #292929;
+}
 .menu-grid{
     -fx-background-color: #1d1d1d;
     -fx-padding: 15;
@@ -75,10 +81,6 @@
     -fx-pref-height: 500;
     -fx-translate-y:-13.5;
 }
-
-.top-pane{
-}
-
 .settings-button {
     -fx-background-color: transparent; 
     -fx-background-image: url('settings.png');
@@ -185,7 +187,16 @@
 
 .task-table-cell{
 
-    width: 20px;
-    -fx-padding: 10;
-
+    width: 200px;
+    -fx-padding: 100;
+    padding: 300;
+    -fx-border-width: 200px;
+    -fx-border-insets: 300;
+    -fx-pref-width: 5000;
 }
+
+.task-table-container {
+    column-gap: 100px;
+  }
+  
+  

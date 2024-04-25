@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.List;
 
 import com.example.morphia.entities.FocusSession;
@@ -16,13 +18,19 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 public class WorkSessionPane extends BorderPane {
 
-    public List<Task> currenttasks = new ArrayList<Task>();
+    public Dictionary<DisplayTask, String> prevStatuses = new Hashtable();
+    public ArrayList<DisplayTask> currentDisplayTasks = new ArrayList<DisplayTask>();
+
     public VBox currentTaskList = new VBox();
 
     public Boolean inSession = false;
@@ -33,15 +41,22 @@ public class WorkSessionPane extends BorderPane {
 
     public void formatPane() {
 
+        // WARNING DUCKTAPE CODE
+
         this.setPadding(new Insets(100, 100, 100, 100));
+
         allTasks.add(new Task(LocalDateTime.now(), LocalDateTime.now(), "Demo Task", "Done"));
         allTasks.add(new Task(LocalDateTime.now(), LocalDateTime.now(), "Demo Task2", "None"));
+
         BorderPane tasksPane = new BorderPane();
         tasksPane.getStyleClass().add("work-gridpanes");
+
         GridPane sessionPane = new GridPane();
         sessionPane.getStyleClass().add("work-gridpanes");
+
         formatTasksPane(tasksPane);
         formatSessionPane(sessionPane);
+
         this.setCenter(tasksPane);
         this.setLeft(sessionPane);
         this.getStyleClass().add("work-backpane");
@@ -60,19 +75,34 @@ public class WorkSessionPane extends BorderPane {
                 if (!inSession) {
                     startButton.setText("stop");
                     currentStartTime = LocalDateTime.now();
+
+                    for (DisplayTask displayTask : currentDisplayTasks) {
+                        prevStatuses.put(displayTask, displayTask.task.getStatus());
+                        displayTask.updateDisplayStatus("In progress");
+                    }
+
                 } else {
                     startButton.setText("start");
                     LocalDateTime endTime = LocalDateTime.now();
-                    if (currenttasks.isEmpty()) {
-                        currenttasks.add(new Task(currentStartTime, endTime, "undefined", "null"));
+
+                    ArrayList<Task> currentTasks = new ArrayList<Task>();
+
+                    for (DisplayTask displayTask : currentDisplayTasks) {
+                        displayTask.updateDisplayStatus(prevStatuses.get(displayTask));
+                        currentTasks.add(displayTask.task);
                     }
+
+                    if (currentTasks.isEmpty()) {
+                        currentTasks.add(new Task(currentStartTime, endTime, "undefined", "null"));
+                    }
+
                     double timeElapsed = endTime
                             .minus(currentStartTime.getLong(ChronoField.MINUTE_OF_DAY), ChronoUnit.MINUTES)
                             .getLong(ChronoField.MINUTE_OF_DAY);
-                    recordedSessions.add(new FocusSession(currenttasks, timeElapsed)); // timeElapsed is number of
+                    recordedSessions.add(new FocusSession(currentTasks, timeElapsed)); // timeElapsed is number of
                                                                                        // minutes
 
-                    currenttasks.clear();
+                    currentDisplayTasks.clear();
                     currentTaskList.getChildren().clear();
                 }
                 inSession = !inSession;
@@ -97,9 +127,8 @@ public class WorkSessionPane extends BorderPane {
         };
         timer.start();
         sessionPane.add(displayTimer, 0, 2);
-
-        sessionPane.add(new Label("Currently doing:"), 0, 3);
-        sessionPane.add(currentTaskList, 0, 4);
+        sessionPane.add(new Label("Session Tasks: "), 0, 3);
+        sessionPane.add(currentTaskList, 0, 5);
 
     }
 
@@ -108,59 +137,91 @@ public class WorkSessionPane extends BorderPane {
         GridPane grid = new GridPane();
         tasksPane.setTop(grid);
 
+        grid.getStyleClass().add("task-table-container");
+
         grid.add(new Label("Manage Tasks"), 0, 0);
 
         Button addTaskButton = new Button("Create new task");
-        grid.add(addTaskButton, 0, 1);
+
+        addTaskButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                formatCreateTaskPane(tasksPane);
+            }
+        });
+
+        grid.add(addTaskButton, 4, 20);
         grid.add(new Label("Tasks To Do:"), 0, 2);
 
         // Table
 
-        VBox Vtable = new VBox();
-        tasksPane.setCenter(Vtable);
+        String[] columnStrings = { "Task               ", "Set At                  ", "Finish By                   ",
+                "Status                  ",
+                "  Manage" };
 
-        GridPane tabletop = new GridPane();
-
-        String[] topRowStrings = { "Task                ",
-                "Start at            ",
-                "Finish by           ",
-                "Status              ",
-                "Manage " };
-
-        for (int i = 0; i < topRowStrings.length; i++) {
-            tabletop.add(new Label(topRowStrings[i]), i, 0);
-        }
-
+        DisplayTaskTable tasksTable = new DisplayTaskTable(grid, 3, columnStrings);
         for (Task task : allTasks) {
-            try {
-                TaskTableRow taskrow = new TaskTableRow(task);
-
-                Vtable.getChildren().add(taskrow);
-
-                taskrow.taskFinished.setOnAction(new EventHandler<ActionEvent>() { // Currently throws null pointer
-                                                                                   // exception
-                    @Override
-                    public void handle(ActionEvent event) {
-                        taskrow.setRowStatus("Finished");
-                        Vtable.getChildren().remove(taskrow);
-                    }
-                });
-
-                taskrow.doTask.setOnAction(new EventHandler<ActionEvent>() { // Currently throws null pointer
-                    // exception
-                    @Override
-                    public void handle(ActionEvent event) {
-                        taskrow.setRowStatus("In progress");
-                        task.setStatus("In progress");
-                        currenttasks.add(task);
-                        currentTaskList.getChildren().add(new Label(task.getDescription()));
-                    }
-                });
-
-            } catch (NullPointerException e) {
-                //
-            }
-
+            DisplayTask displayTask = new DisplayTask(task);
+            tasksTable.addToTable(displayTask);
+            displayTask.addToSession.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    displayTask.addDescription(currentTaskList);
+                    currentDisplayTasks.add(displayTask);
+                }
+            });
         }
+    }
+
+    public void formatCreateTaskPane(BorderPane tasksPane) {
+
+        GridPane grid = new GridPane();
+        tasksPane.setTop(grid);
+
+        String[] labelStrings = { "Create Task", "Task Description: ", "Start at: ", "Finish by: ", "Status: " };
+        for (int i = 0; i < labelStrings.length; i++) {
+            grid.add(new Label(labelStrings[i]), 0, i);
+        }
+
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yy");
+
+        TextField taskDescription = new TextField();
+        grid.add(taskDescription, 1, 1);
+        TextField startTime = new TextField(LocalDateTime.now()
+                .format(timeFormatter));
+        grid.add(startTime, 1, 2);
+        TextField endTime = new TextField(LocalDateTime.now()
+                .format(timeFormatter));
+        grid.add(endTime, 1, 3);
+
+        String[] statuses = { "Finished", "In progress", "Not started", "Paused" };
+
+        MenuButton statusOptions = new MenuButton(statuses[2]);
+        ToggleGroup toggleGroup = new ToggleGroup();
+        for (String status : statuses) {
+            RadioMenuItem radioItem = new RadioMenuItem(status);
+            radioItem.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent e) {
+                    statusOptions.setText(status);
+                }
+            });
+            radioItem.setToggleGroup(toggleGroup);
+            statusOptions.getItems().add(radioItem);
+        }
+        grid.add(statusOptions, 1, 4);
+        Button enterTask = new Button("Enter");
+
+        enterTask.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Task newTask = new Task(LocalDateTime.parse(startTime.getText().toString(), timeFormatter),
+                        LocalDateTime.parse(endTime.getText().toString(), timeFormatter),
+                        taskDescription.getText().toString(), statusOptions.getText());
+                allTasks.add(newTask);
+                formatTasksPane(tasksPane);
+            }
+        });
+        grid.add(enterTask, 2, 10);
     }
 }
