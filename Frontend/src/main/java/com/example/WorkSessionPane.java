@@ -109,7 +109,6 @@ public class WorkSessionPane extends BorderPane {
                 }
                 inSession = !inSession;
             }
-
         });
 
         Label displayTimer = new Label();
