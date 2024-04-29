@@ -4,25 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cb0f0c87-8b21-4b46-96e1-a1904e38ee8d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Backend/AuthService/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Backend/AuthService/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/AuthConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/AuthConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/AuthToken.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/AuthToken.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/SettingsPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/SettingsPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/style1.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/style1.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/App$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/App$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/App$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/App$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/App$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/App$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/App$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/App$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/App$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/App$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/App.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/module-info.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/style1.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/style1.css" afterDir="false" />
-    </list>
+    <list default="true" id="cb0f0c87-8b21-4b46-96e1-a1904e38ee8d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -156,7 +138,7 @@
       <workItem from="1713523097184" duration="4340000" />
       <workItem from="1713539095709" duration="24000" />
       <workItem from="1713795756728" duration="6257000" />
-      <workItem from="1713804685571" duration="8098000" />
+      <workItem from="1713804685571" duration="8926000" />
     </task>
     <servers />
   </component>
