@@ -15,6 +15,8 @@ public class HomePane extends GridPane {
     // probably a better way to take data from the main class than passing params:
     public void formatPane(double workTarget, double workDone) {
 
+        this.getChildren().clear();
+
         this.setHgap(20);
         this.setVgap(20);
         this.setPadding(new Insets(0, 10, 0, 10));
@@ -59,4 +61,5 @@ public class HomePane extends GridPane {
         this.add(progress, 1, 1);
         this.add(stats, 1, 1);
     }
+
 }

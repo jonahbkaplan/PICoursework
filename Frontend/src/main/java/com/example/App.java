@@ -33,6 +33,9 @@ public class App extends Application {
 
     Boolean sidePanelOpen = false;
 
+    public double workTarget = 4.0;
+    public double workDone = 3.5;
+
     @Override
     public void start(Stage stage) throws IOException {
 
@@ -124,19 +127,6 @@ public class App extends Application {
             }
         });
 
-        // Home page
-
-        HomePane home = new HomePane();
-        home.formatPane(4.0, 3.5);
-
-        border.setCenter(home);
-        menugrid.homebutton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                border.setCenter(home);
-            }
-        });
-
         // Settings
 
         SettingsPane settings = new SettingsPane();
@@ -145,6 +135,27 @@ public class App extends Application {
             @Override
             public void handle(ActionEvent event) {
                 border.setCenter(settings);
+            }
+        });
+        settings.changeuserbutton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                stage.setScene(scene);
+            }
+        });
+
+        // Home page
+
+        HomePane home = new HomePane();
+        home.formatPane(workTarget, workDone);
+
+        border.setCenter(home);
+        menugrid.homebutton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                workTarget = Double.valueOf(settings.targetOptions.getText());
+                home.formatPane(workTarget, workDone);
+                border.setCenter(home);
             }
         });
 
