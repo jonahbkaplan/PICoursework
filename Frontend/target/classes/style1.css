@@ -56,9 +56,6 @@
     -fx-text-alignment: center;
 }
 
-<<<<<<< HEAD
-
-=======
 .menu-button{
     -fx-text-fill: #000000;
 }
@@ -85,7 +82,7 @@
     -fx-text-fill: #000000;
     -fx-backgroud-color: #292929;
 }
->>>>>>> morus-dev
+
 .menu-grid{
     -fx-background-color: #1d1d1d;
     -fx-padding: 15;
@@ -176,13 +173,12 @@
     -fx-translate-x: 50;
     -fx-translate-y: 15;
 }
-<<<<<<< HEAD
+
 .preview-title{
     -fx-alignment: center;
     -fx-translate-x: 50;
     -fx-text-fill: #e8e8e8;
 }
-=======
 
 .borders{
     -fx-border-insets: 10;

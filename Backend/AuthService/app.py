@@ -6,19 +6,33 @@ import uuid
 import string
 from email.utils import parseaddr
 import pymongo
-import certifi
+import mongomock
 import traceback
-import sys
 import json
 
 auth_config = json.load(open("auth_config.json"))
 
-ca = certifi.where()
+app = Flask("AuthService")
+CORS(app, resources={r"/*": {"origins": "*"}})
+
+def data_creation_for_testing():
+    global mongo_client
+    global users
+    mongo_client = mongomock.MongoClient()
+    users = mongo_client.user_db.users
+    salt = bcrypt.gensalt()
+    users.insert_one({"user_id": "1234",
+                      "user": "john_doe",
+                      "pass_hash": bcrypt.hashpw("secret".encode(), salt).decode("ascii"),
+                      "salt": salt.decode("ascii"),
+                      "email": "johndoe@email.com"})
+
+
 mongo_client = pymongo.MongoClient(auth_config["mongo_uri"])
 users = mongo_client.user_db.users
 
-salt = bcrypt.gensalt()
 if auth_config["add_admin"]:
+    salt = bcrypt.gensalt()
     users.insert_one({"user_id": "1",
                       "user": "admin",
                       "pass_hash": bcrypt.hashpw("admin".encode(), salt).decode("ascii"),
@@ -29,9 +43,6 @@ alphanum = string.ascii_letters + string.digits
 allowed_special = "!@#$%^&*_+?"
 
 tokens = {}
-
-app = Flask("AuthService")
-CORS(app, resources={r"/*": {"origins": "*"}})
 
 def create_token(user_id):
     # Create a new token that will expire in 1 hour
@@ -130,7 +141,7 @@ def signup():
         if request.method == "OPTIONS":
             return {"Access-Control-Allow-Origin": "*"}
         data = request.get_json()
-        print(data)
+
         if data["user"] == "" or data["email"] == "" or data["password"] == "":
             raise KeyError()
 
@@ -140,7 +151,12 @@ def signup():
         if len(data["user"]) < 3 or len(data["user"]) > 20:
             return {"success": False, "message": "Username must be between 3 and 20 characters long"}
 
-        if "@" not in data["email"] or "." not in data["email"] or parseaddr(data["email"])[1] != data["email"]:
+        try:
+            email_username, email_temp = data["email"].split("@")
+            mail_server, domain = email_temp.split(".")
+            if email_username == "" or mail_server == "" or domain == "":
+                raise Exception
+        except:
             return {"success": False, "message": "Invalid email format"}
 
         if len(data["password"]) < 8:
