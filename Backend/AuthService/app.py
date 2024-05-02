@@ -162,7 +162,6 @@ def signup():
         salt = salt.decode("ascii")
 
         # Create a new user
-
         new_user = {"user_id": str(uuid.uuid4()),
                     "user": data["user"],
                     "pass_hash": pass_hash,
