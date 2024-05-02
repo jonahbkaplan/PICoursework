@@ -78,7 +78,6 @@ public class User {
         this.stressRecordings = stressRecordings;
     }
 
-
     @Override
     public String toString() {
         return "User{" +

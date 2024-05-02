@@ -15,6 +15,15 @@
 
 #### Server Process and Endpoint for Feeding Extracted Data
 
+See the readme in Backend/AuthService for more info on getting access to user data
+
+### Stress / Sensory Overload Prediction Model
+
+
+## Frontend
+
+### Mood & Emotional Reactivity Tracking Boards & Tools.
+=======
 ### Data Model
 
 ![PIDataModel drawio](https://github.com/jonahbkaplan/PICoursework/assets/106742444/df2b308a-1562-4443-bbca-f6536d1ffe02)

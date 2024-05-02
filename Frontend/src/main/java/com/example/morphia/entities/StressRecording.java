@@ -4,6 +4,8 @@ import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
 import org.bson.types.ObjectId;
 
+import java.time.LocalDateTime;
+
 @Entity("StressRecording")
 public class StressRecording {
     @Id
@@ -12,14 +14,20 @@ public class StressRecording {
     double averageHeartRate;
     double averageBloodPressure;
     double timeElapsed;
+    LocalDateTime timeTaken;
 
     public StressRecording(){};
-    public StressRecording(double averageStressMetric, double averageHeartRate, double averageBloodPressure, double timeElapsed) {
+
+
+    public StressRecording(double averageStressMetric, double averageHeartRate, double averageBloodPressure, double timeElapsed, LocalDateTime timeTaken) {
         this.averageStressMetric = averageStressMetric;
         this.averageHeartRate = averageHeartRate;
         this.averageBloodPressure = averageBloodPressure;
         this.timeElapsed = timeElapsed;
+        this.timeTaken = timeTaken;
     }
+
+
 
     public ObjectId getId() {
         return id;
@@ -61,6 +69,15 @@ public class StressRecording {
         this.timeElapsed = timeElapsed;
     }
 
+
+    public LocalDateTime getTimeTaken() {
+        return timeTaken;
+    }
+
+    public void setTimeTaken(LocalDateTime timeTaken) {
+        this.timeTaken = timeTaken;
+    }
+
     @Override
     public String toString() {
         return "StressRecording{" +
@@ -69,6 +86,7 @@ public class StressRecording {
                 ", averageHeartRate=" + averageHeartRate +
                 ", averageBloodPressure=" + averageBloodPressure +
                 ", timeElapsed=" + timeElapsed +
+                ", timeTaken=" + timeTaken +
                 '}';
     }
 }
